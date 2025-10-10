@@ -1,0 +1,369 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Animated gradient background */
+body {
+  background: linear-gradient(135deg, #0f1011 0%, #1a1b1e 25%, #0f1011 50%, #1a1b1e 75%, #0f1011 100%);
+  background-size: 400% 400%;
+  animation: gradientBackground 15s ease infinite;
+}
+
+@keyframes gradientBackground {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* CSS Variables for Bolt-style dark mode theming with colorful accents */
+:root {
+  --color-bg-primary: #0f1011;
+  --color-bg-secondary: #1a1b1e;
+  --color-bg-tertiary: #202124;
+  --color-bg-hover: #2a2b2e;
+  --color-primary: #3b82f6;
+  --color-secondary: #8b5cf6;
+  --color-accent: #06b6d4;
+  --color-purple: #7c3aed;
+  --color-purple-dark: #5b21b6;
+  --color-text: #e6e7e9;
+  --color-text-secondary: #85868e;
+  --color-text-muted: #5a5b62;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.12);
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --gradient-main: linear-gradient(135deg, #0f1011 0%, #1a1b1e 100%);
+  --gradient-button: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  --gradient-purple: linear-gradient(135deg, #7c3aed, #5b21b6, #3b82f6);
+  --gradient-border: linear-gradient(90deg, #7c3aed, #3b82f6, #06b6d4, #3b82f6, #7c3aed);
+  --gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  --animation-duration: 0.2s;
+}
+
+/* Bolt-style card effects with animated borders */
+.glass {
+  background: var(--color-bg-secondary);
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient-border);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.3;
+  animation: borderRotate 3s linear infinite;
+  background-size: 200% 100%;
+}
+
+.glass:hover::before {
+  opacity: 0.6;
+}
+
+.glass-strong {
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border-hover);
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.1);
+}
+
+@keyframes borderRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Bolt-style shine effect */
+.bolt-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.bolt-shine::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.3s ease-out;
+}
+
+.bolt-shine:hover::before {
+  left: 100%;
+}
+
+/* Input focus shine */
+.input-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.input-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(166, 53, 255, 0.1),
+    transparent
+  );
+  transition: left 0.2s ease-out;
+  pointer-events: none;
+}
+
+.input-shine:focus::after {
+  left: 100%;
+}
+
+/* Optimize input performance */
+input[type="text"] {
+  will-change: auto;
+  transform: none;
+}
+
+/* Remove transitions from input for better typing performance */
+input[type="text"]:not(:focus) {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="text"]:focus {
+  transition: none;
+}
+
+/* Bolt-style subtle glow effects */
+.vision-glow {
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.vision-glow:hover {
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Active indicator glow */
+.active-glow {
+  box-shadow: 0 0 10px var(--color-success);
+}
+
+/* Bolt-style button styles with animated gradient */
+.futuristic-btn {
+  background: var(--gradient-purple);
+  background-size: 200% 200%;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  transition: all 0.2s ease;
+  animation: gradientShift 4s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.futuristic-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.futuristic-btn:hover::before {
+  opacity: 1;
+}
+
+.futuristic-btn:hover {
+  border-color: rgba(124, 58, 237, 0.6);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4), 0 0 40px rgba(59, 130, 246, 0.2);
+  transform: translateY(-1px);
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Optimize transitions for better performance */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+}
+
+/* Reduce motion for better performance */
+.reduce-motion {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Simplified screen effects for Bolt-style */
+.crt-screen {
+  position: relative;
+}
+
+.crt-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(59, 130, 246, 0.01);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.crt-content {
+  position: relative;
+}
+
+
+/* Apple-style smooth animations */
+@keyframes animate-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slide-in-from-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: animate-in 0.2s ease-out;
+}
+
+.slide-in-from-bottom-2 {
+  animation: slide-in-from-bottom 0.2s ease-out;
+}
+
+/* Theme-aware animations */
+.theme-transition {
+  transition: all 0.2s ease;
+}
+
+/* Scrollbar styling for futuristic look */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-hover);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Smooth scrolling for all containers */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-scroll {
+  will-change: scroll-position;
+}
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Enhanced glass effects for full view */
+.backdrop-blur-3xl {
+  backdrop-filter: blur(40px);
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+  .vision-glow {
+    box-shadow: 
+      0 0 15px rgba(166, 53, 255, 0.08),
+      0 0 30px rgba(57, 110, 255, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .bolt-shine::before,
+  .input-shine::after {
+    transition: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .glass {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--color-border);
+  }
+  
+  .glass-strong {
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+}
