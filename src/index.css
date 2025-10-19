@@ -2,55 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Animated gradient background */
+/* Animated gradient background with cyberpunk vibes */
 body {
-  background: linear-gradient(135deg, #0f1011 0%, #1a1b1e 25%, #0f1011 50%, #1a1b1e 75%, #0f1011 100%);
+  background: linear-gradient(135deg, #0a0a0f 0%, #141420 15%, #0f0615 30%, #0a0a0f 50%, #141420 70%, #0f0615 85%, #0a0a0f 100%);
   background-size: 400% 400%;
-  animation: gradientBackground 15s ease infinite;
+  animation: gradientBackground 20s ease infinite;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+  animation: pulseGlow 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
 }
 
 @keyframes gradientBackground {
   0%, 100% {
     background-position: 0% 50%;
   }
-  50% {
-    background-position: 100% 50%;
+  33% {
+    background-position: 100% 25%;
+  }
+  66% {
+    background-position: 0% 75%;
   }
 }
 
-/* CSS Variables for Bolt-style dark mode theming with colorful accents */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* CSS Variables for cyberpunk dark mode theming with vibrant accents */
 :root {
-  --color-bg-primary: #0f1011;
-  --color-bg-secondary: #1a1b1e;
-  --color-bg-tertiary: #202124;
-  --color-bg-hover: #2a2b2e;
+  --color-bg-primary: #0a0a0f;
+  --color-bg-secondary: #141420;
+  --color-bg-tertiary: #1a1a2e;
+  --color-bg-hover: #22223a;
   --color-primary: #3b82f6;
   --color-secondary: #8b5cf6;
   --color-accent: #06b6d4;
   --color-purple: #7c3aed;
   --color-purple-dark: #5b21b6;
+  --color-cyan-bright: #00d4ff;
+  --color-purple-bright: #a855f7;
+  --color-blue-bright: #60a5fa;
   --color-text: #e6e7e9;
   --color-text-secondary: #85868e;
   --color-text-muted: #5a5b62;
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-hover: rgba(255, 255, 255, 0.12);
+  --color-border: rgba(124, 58, 237, 0.2);
+  --color-border-hover: rgba(124, 58, 237, 0.4);
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
-  --gradient-main: linear-gradient(135deg, #0f1011 0%, #1a1b1e 100%);
-  --gradient-button: linear-gradient(135deg, #3b82f6, #8b5cf6);
-  --gradient-purple: linear-gradient(135deg, #7c3aed, #5b21b6, #3b82f6);
-  --gradient-border: linear-gradient(90deg, #7c3aed, #3b82f6, #06b6d4, #3b82f6, #7c3aed);
-  --gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  --gradient-main: linear-gradient(135deg, #0a0a0f 0%, #141420 100%);
+  --gradient-button: linear-gradient(135deg, #7c3aed 0%, #3b82f6 50%, #06b6d4 100%);
+  --gradient-purple: linear-gradient(135deg, #a855f7, #7c3aed, #3b82f6, #06b6d4);
+  --gradient-border: linear-gradient(90deg, #7c3aed, #3b82f6, #06b6d4, #10b981, #06b6d4, #3b82f6, #7c3aed);
+  --gradient-card: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(59, 130, 246, 0.03), transparent);
+  --gradient-glow: radial-gradient(circle at center, rgba(124, 58, 237, 0.4), transparent);
   --animation-duration: 0.2s;
 }
 
-/* Bolt-style card effects with animated borders */
+/* Cyberpunk card effects with animated borders and glows */
 .glass {
   background: var(--color-bg-secondary);
   border: 1px solid transparent;
   background-clip: padding-box;
   position: relative;
+  box-shadow:
+    0 0 20px rgba(124, 58, 237, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
 }
 
 .glass::before {
@@ -63,27 +101,53 @@ body {
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  opacity: 0.3;
-  animation: borderRotate 3s linear infinite;
-  background-size: 200% 100%;
+  opacity: 0.5;
+  animation: borderRotate 4s linear infinite;
+  background-size: 300% 100%;
+}
+
+.glass::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: var(--gradient-glow);
+  opacity: 0;
+  filter: blur(15px);
+  transition: opacity 0.3s ease;
+  z-index: -1;
 }
 
 .glass:hover::before {
-  opacity: 0.6;
+  opacity: 0.8;
+  animation: borderRotate 2s linear infinite;
+}
+
+.glass:hover::after {
+  opacity: 0.3;
 }
 
 .glass-strong {
   background: var(--color-bg-tertiary);
   border: 1px solid var(--color-border-hover);
-  box-shadow: 0 0 20px rgba(124, 58, 237, 0.1);
+  box-shadow:
+    0 0 30px rgba(124, 58, 237, 0.2),
+    0 0 60px rgba(59, 130, 246, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 @keyframes borderRotate {
   0% {
     background-position: 0% 50%;
   }
+  25% {
+    background-position: 100% 25%;
+  }
   50% {
-    background-position: 100% 50%;
+    background-position: 200% 50%;
+  }
+  75% {
+    background-position: 100% 75%;
   }
   100% {
     background-position: 0% 50%;
@@ -158,60 +222,123 @@ input[type="text"]:focus {
   transition: none;
 }
 
-/* Bolt-style subtle glow effects */
+/* Cyberpunk vibrant glow effects */
 .vision-glow {
   box-shadow:
     0 1px 3px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
+    0 0 20px rgba(124, 58, 237, 0.15),
+    0 0 40px rgba(59, 130, 246, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  transition: box-shadow 0.3s ease;
 }
 
 .vision-glow:hover {
   box-shadow:
     0 2px 6px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.08);
+    0 0 30px rgba(124, 58, 237, 0.3),
+    0 0 60px rgba(59, 130, 246, 0.2),
+    0 0 90px rgba(6, 182, 212, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
-/* Active indicator glow */
+/* Active indicator glow with pulse */
 .active-glow {
-  box-shadow: 0 0 10px var(--color-success);
+  box-shadow:
+    0 0 20px var(--color-success),
+    0 0 40px rgba(16, 185, 129, 0.5);
+  animation: pulseActive 2s ease-in-out infinite;
 }
 
-/* Bolt-style button styles with animated gradient */
+@keyframes pulseActive {
+  0%, 100% {
+    box-shadow:
+      0 0 20px var(--color-success),
+      0 0 40px rgba(16, 185, 129, 0.5);
+  }
+  50% {
+    box-shadow:
+      0 0 30px var(--color-success),
+      0 0 60px rgba(16, 185, 129, 0.7);
+  }
+}
+
+/* Cyberpunk button styles with animated gradient and glow */
 .futuristic-btn {
-  background: var(--gradient-purple);
-  background-size: 200% 200%;
-  border: 1px solid rgba(124, 58, 237, 0.3);
-  transition: all 0.2s ease;
-  animation: gradientShift 4s ease infinite;
+  background: var(--gradient-button);
+  background-size: 300% 300%;
+  border: 1px solid rgba(124, 58, 237, 0.5);
+  transition: all 0.3s ease;
+  animation: gradientShift 6s ease infinite;
   position: relative;
   overflow: hidden;
+  box-shadow:
+    0 0 20px rgba(124, 58, 237, 0.4),
+    0 0 40px rgba(59, 130, 246, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
 .futuristic-btn::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent, rgba(6, 182, 212, 0.2));
   opacity: 0;
   transition: opacity 0.3s ease;
+  animation: shimmer 3s infinite;
+}
+
+.futuristic-btn::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: var(--gradient-button);
+  opacity: 0;
+  filter: blur(20px);
+  transition: opacity 0.3s ease;
+  z-index: -1;
 }
 
 .futuristic-btn:hover::before {
   opacity: 1;
 }
 
+.futuristic-btn:hover::after {
+  opacity: 0.6;
+}
+
 .futuristic-btn:hover {
-  border-color: rgba(124, 58, 237, 0.6);
-  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4), 0 0 40px rgba(59, 130, 246, 0.2);
-  transform: translateY(-1px);
+  border-color: rgba(124, 58, 237, 0.8);
+  box-shadow:
+    0 0 30px rgba(124, 58, 237, 0.6),
+    0 0 60px rgba(59, 130, 246, 0.4),
+    0 0 90px rgba(6, 182, 212, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.futuristic-btn:active {
+  transform: translateY(0);
 }
 
 @keyframes gradientShift {
   0%, 100% {
     background-position: 0% 50%;
   }
-  50% {
+  33% {
     background-position: 100% 50%;
+  }
+  66% {
+    background-position: 50% 100%;
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    transform: translateX(-100%) translateY(-100%);
+  }
+  50% {
+    transform: translateX(100%) translateY(100%);
   }
 }
 
@@ -285,24 +412,28 @@ input[type="text"]:focus {
   transition: all 0.2s ease;
 }
 
-/* Scrollbar styling for futuristic look */
+/* Scrollbar styling for cyberpunk look */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
   background: var(--color-bg-primary);
-  border-radius: 4px;
+  border-radius: 5px;
+  border: 1px solid rgba(124, 58, 237, 0.1);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-bg-hover);
-  border-radius: 4px;
-  transition: background 0.2s ease;
+  background: linear-gradient(180deg, #7c3aed, #3b82f6);
+  border-radius: 5px;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
+  background: linear-gradient(180deg, #a855f7, #60a5fa);
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
 }
 
 /* Smooth scrolling for all containers */
