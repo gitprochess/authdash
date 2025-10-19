@@ -132,38 +132,38 @@ export const ChatInterface: React.FC = () => {
     return messages.map((message, index) => (
       <div
         key={message.id}
-        className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+        className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in-up`}
       >
         <div
-          className={`flex items-start space-x-2 max-w-[80%] ${
+          className={`flex items-start space-x-3 max-w-[85%] ${
             message.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''
           }`}
         >
           <div
-            className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+            className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg ${
               message.sender === 'user'
-                ? 'bg-gradient-to-br from-vivid-purple to-neon-blue vision-glow'
-                : 'glass border border-white/20'
+                ? 'bg-gradient-to-br from-cyan-500 to-blue-600'
+                : 'bg-gradient-to-br from-purple-600/20 to-blue-600/20 border border-purple-500/30'
             }`}
           >
             {message.sender === 'user' ? (
-              <User className="w-4 h-4 text-white" />
+              <User className="w-5 h-5 text-white" />
             ) : (
-              <Bot className="w-4 h-4 text-white" />
+              <Bot className="w-5 h-5 text-purple-400" />
             )}
           </div>
           <div
-            className={`px-4 py-2 rounded-lg backdrop-blur-sm ${
+            className={`px-5 py-3 rounded-2xl backdrop-blur-sm shadow-lg transition-all duration-200 hover:shadow-xl ${
               message.sender === 'user'
-                ? 'bg-gradient-to-br from-vivid-purple/80 to-neon-blue/60 text-white border border-white/20'
-                : 'glass text-white border border-white/10'
+                ? 'bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-tr-sm'
+                : 'bg-gradient-to-br from-black/60 to-purple-900/20 text-white border border-white/10 rounded-tl-sm'
             }`}
           >
             <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">{message.message}</p>
-            <p className="text-xs opacity-70 mt-1">
-              {message.timestamp.toLocaleTimeString([], { 
-                hour: '2-digit', 
-                minute: '2-digit' 
+            <p className="text-xs opacity-60 mt-2">
+              {message.timestamp.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit'
               })}
             </p>
           </div>
@@ -172,80 +172,82 @@ export const ChatInterface: React.FC = () => {
     ));
   }, [messages]);
   return (
-    <div className="h-full flex flex-col max-h-[calc(100vh-200px)]">
-      {/* CRT-style Layout */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-5 gap-6 min-h-0">
-        {/* Chat Panel */}
-        <div className="lg:col-span-3 glass rounded-2xl flex flex-col min-h-0 crt-screen vision-glow">
-          {/* Chat Header */}
-          <div className="p-4 border-b border-white/10 flex-shrink-0 glass-strong rounded-t-2xl">
-            <div className="flex items-center space-x-2">
-              <MessageSquare className="w-5 h-5 text-vivid-purple" />
-              <h3 className="text-lg font-semibold text-white">
-                Cyaphire AI X
-              </h3>
-              <div className="w-2 h-2 bg-aqua-green rounded-full animate-pulse active-glow"></div>
-            </div>
-            <div className="flex items-center justify-between mt-1">
-              <p className="text-xs text-gray-400">Cyaphire AI X • Powered by DeploidX</p>
-              <div className="flex items-center space-x-1 text-xs text-gray-400">
-                <div className={`w-1 h-1 rounded-full ${token ? 'bg-aqua-green' : 'bg-red-400'}`}></div>
-                <span>{token ? 'Authenticated' : 'Not authenticated'}</span>
+    <div className="h-full flex gap-4 overflow-hidden">
+      {/* Chat Panel - Centered with balanced padding */}
+      <div className="flex-1 flex flex-col bg-gradient-to-br from-black/40 to-purple-900/10 rounded-xl border border-white/10 shadow-2xl overflow-hidden">
+        {/* Chat Header */}
+        <div className="px-6 py-4 border-b border-white/10 bg-black/30 backdrop-blur-sm flex-shrink-0">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center shadow-lg">
+                <Bot className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h3 className="text-base font-semibold text-white flex items-center space-x-2">
+                  <span>Cyaphire AI X</span>
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                </h3>
+                <p className="text-xs text-gray-400">Powered by DeploidX</p>
               </div>
             </div>
+            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-black/40 border border-white/10">
+              <div className={`w-1.5 h-1.5 rounded-full ${token ? 'bg-green-400' : 'bg-red-400'}`}></div>
+              <span className="text-xs text-gray-300">{token ? 'Authenticated' : 'Not authenticated'}</span>
+            </div>
           </div>
+        </div>
 
-          {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 crt-content">
+        {/* Messages Area */}
+        <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 min-h-0">
             {messageComponents}
             
-            {loading && (
-              <div className="flex justify-start">
-                <div className="flex items-start space-x-2">
-                  <div className="w-8 h-8 rounded-full glass border border-white/20 flex items-center justify-center">
-                    <Bot className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="glass text-white border border-white/10 px-4 py-2 rounded-lg">
-                    <div className="flex items-center space-x-2">
-                      <Loader2 className="w-4 h-4 animate-spin text-vivid-purple" />
-                      <span className="text-sm">AI is thinking...</span>
-                    </div>
+          {loading && (
+            <div className="flex justify-start">
+              <div className="flex items-start space-x-3">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0">
+                  <Bot className="w-5 h-5 text-purple-400" />
+                </div>
+                <div className="bg-gradient-to-br from-black/60 to-purple-900/20 text-white border border-white/10 px-5 py-3 rounded-2xl rounded-tl-sm shadow-lg max-w-[85%]">
+                  <div className="flex items-center space-x-2">
+                    <Loader2 className="w-4 h-4 animate-spin text-purple-400" />
+                    <span className="text-sm">AI is thinking...</span>
                   </div>
                 </div>
               </div>
-            )}
-            
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input Area */}
-          <form onSubmit={handleSendMessage} className="p-4 border-t border-white/10 flex-shrink-0">
-            <div className="flex space-x-2">
-              <input
-                ref={inputRef}
-                type="text"
-                value={inputMessage}
-                onChange={handleInputChange}
-                placeholder="Ask me anything about deployments, servers, or development..."
-                className="flex-1 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-vivid-purple focus:ring-1 focus:ring-vivid-purple backdrop-blur-sm"
-                autoComplete="off"
-                spellCheck="false"
-              />
-              <button
-                type="submit"
-                disabled={!inputMessage.trim() || loading}
-                className="px-4 py-2 futuristic-btn text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-vivid-purple focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
-              >
-                <Send className="w-4 h-4" />
-              </button>
             </div>
-          </form>
+          )}
+
+          <div ref={messagesEndRef} />
         </div>
 
-        {/* Logs Panel */}
-        <div className="lg:col-span-2 flex flex-col min-h-0">
-          <LogsPanel />
-        </div>
+        {/* Input Area */}
+        <form onSubmit={handleSendMessage} className="px-6 py-4 border-t border-white/10 bg-black/30 backdrop-blur-sm flex-shrink-0">
+          <div className="flex items-center space-x-3">
+            <input
+              ref={inputRef}
+              type="text"
+              value={inputMessage}
+              onChange={handleInputChange}
+              placeholder="Ask me anything about deployments, servers, or development..."
+              className="flex-1 px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:ring-2 focus:ring-purple-500/20 transition-all duration-200"
+              autoComplete="off"
+              spellCheck="false"
+            />
+            <button
+              type="submit"
+              disabled={!inputMessage.trim() || loading}
+              className="px-5 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white rounded-xl font-medium shadow-lg hover:shadow-purple-500/50 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 flex items-center space-x-2"
+            >
+              <Send className="w-4 h-4" />
+              <span className="hidden sm:inline">Send</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* Logs Panel - Resizable Right Panel */}
+      <div className="w-96 flex-shrink-0 hidden lg:block">
+        <LogsPanel />
       </div>
     </div>
   );

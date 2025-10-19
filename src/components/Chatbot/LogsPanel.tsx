@@ -19,6 +19,7 @@ export const LogsPanel: React.FC = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   const [copiedLogId, setCopiedLogId] = useState<string | null>(null);
   const [logStats, setLogStats] = useState({ total: 0, errors: 0, warnings: 0 });
+  const [isCollapsed, setIsCollapsed] = useState(false);
   
   const wsRef = useRef<WebSocket | null>(null);
   const logsContainerRef = useRef<HTMLDivElement>(null);
@@ -284,13 +285,17 @@ export const LogsPanel: React.FC = () => {
   }, [logs, getLogLevelStyle, formatTimestamp, copyLogToClipboard, copiedLogId]);
 
   const LogsContainer = ({ className = "" }: { className?: string }) => (
-    <div className={`flex flex-col h-full min-h-0 ${className}`}>
+    <div className={`flex flex-col h-full min-h-0 bg-gradient-to-br from-black/60 to-purple-900/10 rounded-xl border border-white/10 shadow-2xl overflow-hidden transition-all duration-300 ${className} ${isCollapsed ? 'w-12' : ''}`}>
       {/* Header */}
-      <div className="flex-shrink-0 px-3 py-2 border-b border-white/10 glass-strong rounded-t-2xl">
+      <div className="flex-shrink-0 px-4 py-3 border-b border-white/10 bg-black/30 backdrop-blur-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Terminal className="w-4 h-4 text-aqua-green" />
-            <h3 className="text-sm font-semibold text-white">Runtime Logs</h3>
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center shadow-lg flex-shrink-0">
+              <Terminal className="w-4 h-4 text-white" />
+            </div>
+            {!isCollapsed && (
+              <>
+                <h3 className="text-sm font-semibold text-white">Runtime Logs</h3>
             
             {/* Status indicator */}
             <div className={`flex items-center space-x-1 px-1.5 py-0.5 rounded text-xs ${
@@ -302,53 +307,56 @@ export const LogsPanel: React.FC = () => {
               <span>{isConnected && !isPaused ? 'Live' : isPaused ? 'Paused' : 'Off'}</span>
             </div>
 
-            {/* Stats */}
-            <div className="flex items-center space-x-2 text-xs text-gray-400">
-              <span>{logStats.total}</span>
-              {logStats.errors > 0 && (
-                <span className="text-red-300">{logStats.errors}E</span>
-              )}
-              {logStats.warnings > 0 && (
-                <span className="text-yellow-300">{logStats.warnings}W</span>
-              )}
+                {/* Stats */}
+                <div className="flex items-center space-x-2 text-xs text-gray-400">
+                  <span>{logStats.total}</span>
+                  {logStats.errors > 0 && (
+                    <span className="text-red-300">{logStats.errors}E</span>
+                  )}
+                  {logStats.warnings > 0 && (
+                    <span className="text-yellow-300">{logStats.warnings}W</span>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+
+          {!isCollapsed && (
+            <div className="flex items-center space-x-1">
+              <button
+                onClick={togglePause}
+                className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-150"
+                title={isPaused ? 'Resume' : 'Pause'}
+              >
+                {isPaused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
+              </button>
+
+              <button
+                onClick={clearLogs}
+                className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-150"
+                title="Clear"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+
+              <button
+                onClick={downloadLogs}
+                disabled={logs.length === 0}
+                className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-150 disabled:opacity-50"
+                title="Download"
+              >
+                <Download className="w-3.5 h-3.5" />
+              </button>
+
+              <button
+                onClick={toggleFullView}
+                className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-150"
+                title="Expand"
+              >
+                <Maximize2 className="w-3.5 h-3.5" />
+              </button>
             </div>
-          </div>
-          
-          {/* Action buttons */}
-          <div className="flex items-center space-x-1">
-            <button
-              onClick={togglePause}
-              className="p-1 rounded text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-150"
-              title={isPaused ? 'Resume' : 'Pause'}
-            >
-              {isPaused ? <Play className="w-3 h-3" /> : <Pause className="w-3 h-3" />}
-            </button>
-            
-            <button
-              onClick={clearLogs}
-              className="p-1 rounded text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-150"
-              title="Clear"
-            >
-              <Trash2 className="w-3 h-3" />
-            </button>
-            
-            <button
-              onClick={downloadLogs}
-              disabled={logs.length === 0}
-              className="p-1 rounded text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-150 disabled:opacity-50"
-              title="Download"
-            >
-              <Download className="w-3 h-3" />
-            </button>
-            
-            <button
-              onClick={toggleFullView}
-              className="p-1 rounded text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-150"
-              title="Expand"
-            >
-              <Maximize2 className="w-3 h-3" />
-            </button>
-          </div>
+          )}
         </div>
       </div>
 
@@ -359,75 +367,71 @@ export const LogsPanel: React.FC = () => {
         </div>
       )}
 
-      {/* Logs Content */}
-      <div 
-        ref={logsContainerRef}
-        className="flex-1 overflow-y-auto min-h-0 bg-black/5"
-      >
-        {logs.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-gray-400 p-6">
-            <Terminal className="w-8 h-8 mb-2 opacity-50" />
-            <p className="text-sm">No logs yet</p>
-            <p className="text-xs opacity-75">
-              {isConnected ? 'Waiting for messages...' : 'Connect to start'}
-            </p>
+      {!isCollapsed && (
+        <>
+          {/* Logs Content */}
+          <div
+            ref={logsContainerRef}
+            className="flex-1 overflow-y-auto min-h-0 bg-black/20"
+          >
+            {logs.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-full text-gray-400 p-6">
+                <Terminal className="w-8 h-8 mb-2 opacity-50" />
+                <p className="text-sm">No logs yet</p>
+                <p className="text-xs opacity-75">
+                  {isConnected ? 'Waiting for messages...' : 'Connect to start'}
+                </p>
+              </div>
+            ) : (
+              <div className="text-xs font-mono">
+                {logEntries}
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="text-xs font-mono">
-            {logEntries}
-          </div>
-        )}
-      </div>
 
-      {/* Footer */}
-      <div className="flex-shrink-0 px-3 py-1 border-t border-white/10 text-xs text-gray-500 bg-black/10">
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-xs">wss://logs.deploidx.com:8083</span>
-          <div className="flex items-center space-x-1">
-            <div className={`w-1 h-1 rounded-full ${
-              isConnected && !isPaused ? 'bg-aqua-green animate-pulse' : 'bg-red-400'
-            }`}></div>
-            <span>
-              {isConnected ? (isPaused ? 'Paused' : 'Connected') : 'Disconnected'}
-            </span>
+          {/* Footer */}
+          <div className="flex-shrink-0 px-4 py-2 border-t border-white/10 text-xs text-gray-500 bg-black/20">
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-xs">wss://logs.deploidx.com:8083</span>
+              <div className="flex items-center space-x-1">
+                <div className={`w-1.5 h-1.5 rounded-full ${
+                  isConnected && !isPaused ? 'bg-green-400 animate-pulse' : 'bg-red-400'
+                }`}></div>
+                <span>
+                  {isConnected ? (isPaused ? 'Paused' : 'Connected') : 'Disconnected'}
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 
   if (isFullView) {
     return (
-      <div 
-        className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-400 ease-out ${
-          isAnimating 
-            ? 'bg-black/0 backdrop-blur-none' 
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center p-6 transition-all duration-300 ease-out ${
+          isAnimating
+            ? 'bg-black/0 backdrop-blur-none'
             : 'bg-black/80 backdrop-blur-xl'
         }`}
       >
-        <div 
-          className={`w-full h-full max-w-7xl transition-all duration-400 ease-out transform ${
-            isAnimating 
-              ? 'scale-95 opacity-0' 
+        <div
+          className={`w-full h-full max-w-7xl transition-all duration-300 ease-out transform ${
+            isAnimating
+              ? 'scale-95 opacity-0'
               : 'scale-100 opacity-100'
           }`}
         >
-          <div className="glass rounded-2xl vision-glow h-full overflow-hidden backdrop-blur-3xl border-2 border-white/20 shadow-2xl">
-            <LogsContainer />
-          </div>
+          <LogsContainer />
         </div>
       </div>
     );
   }
 
   return (
-    <div 
-      className={`glass rounded-2xl flex flex-col min-h-0 crt-screen vision-glow transition-all duration-400 ease-out transform ${
-        isAnimating 
-          ? 'scale-105 opacity-80' 
-          : 'scale-100 opacity-100'
-      }`}
-    >
+    <div className="h-full">
       <LogsContainer />
     </div>
   );

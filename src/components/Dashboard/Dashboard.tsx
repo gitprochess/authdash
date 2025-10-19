@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Server, MessageSquare, User, Settings, Container, Database, HelpCircle } from 'lucide-react';
+import { Server, MessageSquare, User, Settings, Container, Database, HelpCircle, Menu } from 'lucide-react';
 import { Header } from './Header';
 import { SSHManager } from '../SSH/SSHManager';
 import { ChatInterface } from '../Chatbot/ChatInterface';
@@ -13,6 +13,7 @@ type TabType = 'containers' | 'databases' | 'ssh' | 'chat' | 'help' | 'profile' 
 
 export const Dashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('containers');
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { theme, settings } = useTheme();
 
   const tabs = [
@@ -64,52 +65,89 @@ export const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div
-      className={`min-h-screen flex flex-col bg-bolt-dark-950 ${
-        settings.animations ? 'transition-all duration-200' : ''
-      }`}
-    >
-
+    <div className="min-h-screen h-screen flex flex-col bg-bolt-dark-950 overflow-hidden">
       <Header />
-      
-      <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6 min-h-0 relative z-10">
-        {/* Sidebar */}
-        <div className="lg:w-64 flex-shrink-0">
-          <nav className="glass rounded-2xl p-4 vision-glow">
-            <div className="space-y-2">
-              {tabs.map((tab) => {
-                const Icon = tab.icon;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 relative overflow-hidden ${
-                      activeTab === tab.id
-                        ? 'text-bolt-dark-50 border border-purple-600/50 shadow-lg shadow-purple-900/20'
-                        : 'text-bolt-dark-300 hover:text-bolt-dark-50 hover:bg-bolt-dark-900 border border-transparent hover:border-purple-800/30'
-                    }`}
-                    style={{
-                      background: activeTab === tab.id
-                        ? 'linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(59, 130, 246, 0.1))'
-                        : undefined
-                    }}
-                  >
-                    <Icon className="w-5 h-5" />
-                    <span className="font-medium">{tab.label}</span>
-                    {tab.id === 'help' && (
-                      <span className="ml-auto w-2 h-2 bg-bolt-accent-green rounded-full animate-pulse"></span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </nav>
-        </div>
 
-        {/* Main Content */}
-        <div className="flex-1 min-h-0">
-          {renderContent()}
-        </div>
+      <div className="flex-1 flex overflow-hidden">
+        {/* Sidebar - Responsive with collapse */}
+        <aside className={`border-r border-white/10 bg-black/20 backdrop-blur-sm flex flex-col transition-all duration-300 ease-in-out ${
+          sidebarCollapsed ? 'w-16' : 'w-64'
+        } lg:relative absolute lg:translate-x-0 ${sidebarCollapsed ? '-translate-x-full lg:translate-x-0' : 'translate-x-0'} z-30 h-full`}>
+          {/* Sidebar Toggle Button */}
+          <div className="p-3 border-b border-white/10 flex items-center justify-between">
+            {!sidebarCollapsed && (
+              <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Navigation</span>
+            )}
+            <button
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-200"
+              title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            >
+              <Menu className="w-4 h-4" />
+            </button>
+          </div>
+
+          <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center' : 'space-x-3'} px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative ${
+                    isActive
+                      ? 'bg-gradient-to-r from-purple-600/20 to-blue-600/20 text-white border border-purple-500/30 shadow-lg shadow-purple-900/20'
+                      : 'text-gray-400 hover:text-white hover:bg-white/5 border border-transparent'
+                  }`}
+                  title={sidebarCollapsed ? tab.label : ''}
+                >
+                  <div className={`flex items-center justify-center w-5 h-5 ${
+                    isActive ? 'text-purple-400' : 'text-gray-500 group-hover:text-gray-300'
+                  }`}>
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  {!sidebarCollapsed && (
+                    <>
+                      <span className="flex-1 text-left">{tab.label}</span>
+                      {tab.id === 'help' && (
+                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                      )}
+                    </>
+                  )}
+                  {isActive && (
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-purple-500 to-blue-500 rounded-r-full"></div>
+                  )}
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Sidebar Footer */}
+          {!sidebarCollapsed && (
+            <div className="p-3 border-t border-white/10 text-xs text-gray-500">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span>System Online</span>
+              </div>
+            </div>
+          )}
+        </aside>
+
+        {/* Overlay for mobile when sidebar is open */}
+        {!sidebarCollapsed && (
+          <div
+            className="fixed inset-0 bg-black/50 z-20 lg:hidden"
+            onClick={() => setSidebarCollapsed(true)}
+          />
+        )}
+
+        {/* Main Content Area */}
+        <main className="flex-1 overflow-hidden">
+          <div className="h-full p-4 md:p-6 overflow-y-auto">
+            {renderContent()}
+          </div>
+        </main>
       </div>
     </div>
   );
