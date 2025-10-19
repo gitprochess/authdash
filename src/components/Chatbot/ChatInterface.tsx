@@ -184,13 +184,13 @@ export const ChatInterface: React.FC = () => {
   }, [messages]);
   return (
     <div className="h-full flex gap-6 overflow-hidden">
-      {/* Chat Panel - Visual Centerpiece with Gradient */}
-      <div className="flex-1 flex flex-col chat-centerpiece rounded-2xl overflow-hidden" style={{ background: 'var(--gradient-chat)' }}>
-        {/* Chat Header - Cyber Theme */}
-        <div className="px-8 py-5 border-b flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: 'rgba(29, 26, 46, 0.5)' }}>
+      {/* Chat Panel - Visual Centerpiece */}
+      <div className="flex-1 flex flex-col chat-centerpiece rounded-2xl overflow-hidden" style={{ background: 'var(--qp-bg-chat)' }}>
+        {/* Chat Header - Matte */}
+        <div className="px-8 py-5 border-b flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: '#0A0A0A' }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg" style={{ background: 'var(--gradient-ai)', boxShadow: 'var(--qp-shadow-glow)' }}>
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: '#1A1A2E', boxShadow: '0 1px 4px rgba(0, 0, 0, 0.8)' }}>
                 <Bot className="w-7 h-7" style={{ color: 'var(--qp-primary)' }} />
               </div>
               <div>
@@ -201,7 +201,7 @@ export const ChatInterface: React.FC = () => {
                 <p className="text-xs" style={{ color: 'var(--qp-text-secondary)' }}>Powered by DeploidX • Quantum AI Engine</p>
               </div>
             </div>
-            <div className="flex items-center space-x-2 px-4 py-2 rounded-full border" style={{ background: 'rgba(108, 99, 255, 0.05)', borderColor: 'var(--qp-border)' }}>
+            <div className="flex items-center space-x-2 px-4 py-2 rounded-full border" style={{ background: '#0F0F0F', borderColor: 'var(--qp-border)' }}>
               <div className={`w-2 h-2 rounded-full animate-pulse`} style={{ background: token ? 'var(--qp-secondary)' : '#ef4444' }}></div>
               <span className="text-xs" style={{ color: 'var(--qp-text-primary)' }}>{token ? 'Connected' : 'Disconnected'}</span>
             </div>
@@ -237,8 +237,8 @@ export const ChatInterface: React.FC = () => {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input Area - Cyber Design */}
-        <form onSubmit={handleSendMessage} className="px-8 py-5 border-t flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: 'rgba(29, 26, 46, 0.6)' }}>
+        {/* Input Area - Matte Design */}
+        <form onSubmit={handleSendMessage} className="px-8 py-5 border-t flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: '#0A0A0A' }}>
           <div className="flex items-center space-x-4">
             <input
               ref={inputRef}
@@ -248,7 +248,7 @@ export const ChatInterface: React.FC = () => {
               placeholder="Ask me anything about deployments, servers, or development..."
               className="flex-1 px-5 py-4 rounded-xl text-sm transition-all duration-300 focus:outline-none"
               style={{
-                background: 'rgba(14, 14, 18, 0.6)',
+                background: '#0F0F0F',
                 border: `1px solid var(--qp-border)`,
                 color: 'var(--qp-text-primary)',
               }}
@@ -262,8 +262,8 @@ export const ChatInterface: React.FC = () => {
               disabled={!inputMessage.trim() || loading}
               className="px-6 py-4 rounded-xl font-medium shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 flex items-center space-x-2 hover:scale-105"
               style={{
-                background: 'var(--gradient-button)',
-                boxShadow: 'var(--qp-shadow-cyan)',
+                background: '#6C63FF',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.8)',
                 color: 'white'
               }}
             >

@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Cyber-Futuristic Background */
+/* Matte Black Background */
 body {
-  background: #0B0B10;
+  background: #000000;
   position: relative;
 }
 
@@ -15,24 +15,9 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(108, 99, 255, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 20% 80%, rgba(108, 99, 255, 0.06) 0%, transparent 50%);
-  animation: quantumPulse 12s ease-in-out infinite;
+  background: transparent;
   pointer-events: none;
   z-index: 0;
-}
-
-@keyframes quantumPulse {
-  0%, 100% {
-    opacity: 0.4;
-    transform: scale(1) rotate(0deg);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05) rotate(1deg);
-  }
 }
 
 /* Flying Tech Icons */
@@ -110,29 +95,29 @@ body::before {
   }
 }
 
-/* Cyber-Futuristic Theme with Distinct Section Colors */
+/* Matte Black Theme with Solid Colors */
 :root {
-  --qp-bg-main: #0B0B10;
-  --qp-bg-sidebar: #14141E;
-  --qp-bg-topbar: #181824;
-  --qp-bg-chat: #1D1A2E;
-  --qp-bg-logs: #222235;
-  --qp-bg-panel: rgba(26, 26, 46, 0.7);
+  --qp-bg-main: #000000;
+  --qp-bg-sidebar: #0A0A0A;
+  --qp-bg-topbar: #0D0D0D;
+  --qp-bg-chat: #050505;
+  --qp-bg-logs: #080808;
+  --qp-bg-panel: #0F0F0F;
   --qp-primary: #6C63FF;
   --qp-secondary: #00FFFF;
   --qp-accent: #60A5FA;
-  --qp-text-primary: #E8E8E8;
-  --qp-text-secondary: #A0A0A0;
-  --qp-border: rgba(108, 99, 255, 0.2);
-  --qp-border-hover: rgba(108, 99, 255, 0.5);
-  --qp-glow-primary: rgba(108, 99, 255, 0.4);
-  --qp-glow-secondary: rgba(0, 255, 255, 0.4);
-  --gradient-ai: linear-gradient(135deg, rgba(108, 99, 255, 0.15), rgba(0, 255, 255, 0.08));
-  --gradient-button: linear-gradient(135deg, #6C63FF, #00FFFF);
-  --gradient-chat: linear-gradient(180deg, #1D1A2E 0%, #251F3E 100%);
-  --qp-shadow-glow: 0 4px 24px rgba(108, 99, 255, 0.2);
-  --qp-shadow-glow-strong: 0 8px 40px rgba(108, 99, 255, 0.3);
-  --qp-shadow-cyan: 0 4px 24px rgba(0, 255, 255, 0.25);
+  --qp-text-primary: #CCCCCC;
+  --qp-text-secondary: #808080;
+  --qp-border: rgba(108, 99, 255, 0.3);
+  --qp-border-hover: rgba(108, 99, 255, 0.7);
+  --qp-glow-primary: rgba(108, 99, 255, 0.1);
+  --qp-glow-secondary: rgba(0, 255, 255, 0.1);
+  --gradient-ai: #1A1A2E;
+  --gradient-button: #6C63FF;
+  --gradient-chat: #050505;
+  --qp-shadow-glow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  --qp-shadow-glow-strong: 0 2px 8px rgba(0, 0, 0, 0.9);
+  --qp-shadow-cyan: 0 1px 4px rgba(0, 0, 0, 0.8);
   --animation-duration: 0.3s;
   --color-bg-primary: var(--qp-bg-main);
   --color-bg-secondary: var(--qp-bg-panel);
@@ -149,16 +134,14 @@ body::before {
   --gradient-glow: radial-gradient(circle at center, var(--qp-glow-primary), transparent);
 }
 
-/* Cyber Glass Effect */
+/* Matte Solid Panel */
 .glass {
-  background: rgba(29, 26, 46, 0.6);
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
-  border: 1px solid rgba(108, 99, 255, 0.2);
+  background: #0F0F0F;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(108, 99, 255, 0.3);
   position: relative;
-  box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(108, 99, 255, 0.1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
 .glass::before {
@@ -166,45 +149,31 @@ body::before {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 1px;
-  background: var(--gradient-border);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.2;
-  animation: borderRotate 10s linear infinite;
-  background-size: 300% 100%;
+  opacity: 0;
 }
 
 .glass::after {
   content: '';
   position: absolute;
-  inset: -2px;
+  inset: 0;
   border-radius: inherit;
-  background: var(--gradient-glow);
   opacity: 0;
-  filter: blur(20px);
-  transition: opacity 0.4s ease;
-  z-index: -1;
 }
 
 .glass:hover::before {
-  opacity: 0.3;
+  opacity: 0;
 }
 
 .glass:hover::after {
-  opacity: 0.15;
+  opacity: 0;
 }
 
 .glass-strong {
-  background: rgba(29, 26, 46, 0.85);
-  backdrop-filter: blur(32px) saturate(160%);
-  -webkit-backdrop-filter: blur(32px) saturate(160%);
-  border: 1px solid rgba(108, 99, 255, 0.25);
-  box-shadow:
-    0 8px 40px rgba(0, 0, 0, 0.6),
-    0 0 30px rgba(108, 99, 255, 0.15),
-    inset 0 1px 0 rgba(108, 99, 255, 0.1);
+  background: #0F0F0F;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(108, 99, 255, 0.35);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
 @keyframes borderRotate {
@@ -335,56 +304,41 @@ input[type="text"]:focus {
 
 /* Cyberpunk button styles with animated gradient and glow */
 .futuristic-btn {
-  background: var(--gradient-button);
-  background-size: 300% 300%;
-  border: 1px solid rgba(108, 99, 255, 0.5);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: gradientShift 8s ease infinite;
+  background: #6C63FF;
+  border: 1px solid #6C63FF;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  box-shadow:
-    0 0 20px rgba(108, 99, 255, 0.3),
-    0 0 40px rgba(0, 255, 255, 0.2),
-    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 .futuristic-btn::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent, rgba(0, 255, 255, 0.2));
   opacity: 0;
-  transition: opacity 0.4s ease;
-  animation: shimmer 4s infinite;
 }
 
 .futuristic-btn::after {
   content: '';
   position: absolute;
-  inset: -4px;
-  border-radius: inherit;
-  background: var(--gradient-button);
+  inset: 0;
   opacity: 0;
-  filter: blur(20px);
-  transition: opacity 0.3s ease;
-  z-index: -1;
 }
 
 .futuristic-btn:hover::before {
-  opacity: 1;
+  opacity: 0;
 }
 
 .futuristic-btn:hover::after {
-  opacity: 0.6;
+  opacity: 0;
 }
 
 .futuristic-btn:hover {
-  border-color: rgba(0, 255, 255, 0.8);
-  box-shadow:
-    0 0 30px rgba(108, 99, 255, 0.5),
-    0 0 50px rgba(0, 255, 255, 0.4),
-    inset 0 1px 1px rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
+  background: #7C73FF;
+  border-color: #7C73FF;
+  box-shadow: 0 0 10px rgba(108, 99, 255, 0.4);
+  transform: translateY(-1px);
 }
 
 .futuristic-btn:active {
@@ -719,29 +673,30 @@ button:active {
   animation: typingPulse 1.5s ease-in-out infinite;
 }
 
-/* AI Message Glow - Subtle Professional */
+/* AI Message - No Glow */
 @keyframes aiGlow {
   0%, 100% {
-    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.15);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   }
   50% {
-    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.2);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
   }
 }
 
 .ai-message-glow {
-  animation: aiGlow 5s ease-in-out infinite;
+  animation: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
-/* Cyan text glow on hover */
+/* Cyan text - No glow */
 .cyan-glow-hover:hover {
-  text-shadow: 0 0 10px var(--qp-secondary), 0 0 20px var(--qp-secondary);
-  transition: text-shadow 0.3s ease;
+  color: var(--qp-secondary);
+  transition: color 0.3s ease;
 }
 
-/* Chat centerpiece - Professional */
+/* Chat centerpiece - Matte */
 .chat-centerpiece {
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
   border: 1px solid var(--qp-border);
 }
 

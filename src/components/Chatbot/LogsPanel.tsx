@@ -285,12 +285,12 @@ export const LogsPanel: React.FC = () => {
   }, [logs, getLogLevelStyle, formatTimestamp, copyLogToClipboard, copiedLogId]);
 
   const LogsContainer = ({ className = "" }: { className?: string }) => (
-    <div className={`flex flex-col h-full min-h-0 rounded-2xl overflow-hidden transition-all duration-300 ${className} ${isCollapsed ? 'w-12' : ''}`} style={{ background: 'var(--qp-bg-logs)', border: '1px solid var(--qp-border)', boxShadow: '0 4px 24px rgba(0, 0, 0, 0.4)' }}>
+    <div className={`flex flex-col h-full min-h-0 rounded-2xl overflow-hidden transition-all duration-300 ${className} ${isCollapsed ? 'w-12' : ''}`} style={{ background: 'var(--qp-bg-logs)', border: '1px solid var(--qp-border)', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.9)' }}>
       {/* Header */}
-      <div className="flex-shrink-0 px-4 py-3 border-b backdrop-blur-sm" style={{ borderColor: 'var(--qp-border)', background: 'rgba(34, 34, 53, 0.6)' }}>
+      <div className="flex-shrink-0 px-4 py-3 border-b" style={{ borderColor: 'var(--qp-border)', background: '#0A0A0A' }}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center shadow-lg flex-shrink-0" style={{ background: 'var(--gradient-ai)' }}>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: '#1A1A2E', boxShadow: '0 1px 4px rgba(0, 0, 0, 0.8)' }}>
               <Terminal className="w-4 h-4" style={{ color: 'var(--qp-secondary)' }} />
             </div>
             {!isCollapsed && (

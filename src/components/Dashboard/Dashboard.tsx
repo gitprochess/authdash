@@ -70,10 +70,10 @@ export const Dashboard: React.FC = () => {
       <Header />
 
       <div className="flex-1 flex overflow-hidden">
-        {/* Sidebar - Distinct Cyber Section */}
+        {/* Sidebar - Matte Section */}
         <aside className={`border-r flex flex-col transition-all duration-300 ease-in-out ${
           sidebarCollapsed ? 'w-16' : 'w-64'
-        } lg:relative absolute lg:translate-x-0 ${sidebarCollapsed ? '-translate-x-full lg:translate-x-0' : 'translate-x-0'} z-30 h-full`} style={{ borderColor: 'var(--qp-border)', background: 'var(--qp-bg-sidebar)', backdropFilter: 'blur(16px)' }}>
+        } lg:relative absolute lg:translate-x-0 ${sidebarCollapsed ? '-translate-x-full lg:translate-x-0' : 'translate-x-0'} z-30 h-full`} style={{ borderColor: 'var(--qp-border)', background: 'var(--qp-bg-sidebar)' }}>
           {/* Sidebar Toggle Button */}
           <div className="p-3 border-b flex items-center justify-between" style={{ borderColor: 'var(--qp-border)' }}>
             {!sidebarCollapsed && (
@@ -101,13 +101,13 @@ export const Dashboard: React.FC = () => {
                   onClick={() => setActiveTab(tab.id)}
                   className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center' : 'space-x-3'} px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative border ${tab.id === 'chat' && isActive ? 'ai-tab-special' : ''}`}
                   style={{
-                    background: isActive ? 'var(--gradient-ai)' : 'transparent',
+                    background: isActive ? '#1A1A2E' : 'transparent',
                     color: isActive ? 'var(--qp-text-primary)' : 'var(--qp-text-secondary)',
                     borderColor: isActive ? 'var(--qp-border-hover)' : 'transparent',
-                    boxShadow: isActive ? 'var(--qp-shadow-glow)' : 'none'
+                    boxShadow: isActive ? '0 1px 4px rgba(0, 0, 0, 0.8)' : 'none'
                   }}
-                  onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.color = 'var(--qp-text-primary)'; e.currentTarget.style.background = 'rgba(108, 99, 255, 0.1)'; e.currentTarget.style.boxShadow = '0 0 15px rgba(108, 99, 255, 0.2)'; } }}
-                  onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.color = 'var(--qp-text-secondary)'; e.currentTarget.style.background = 'transparent'; e.currentTarget.style.boxShadow = 'none'; } }}
+                  onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.color = 'var(--qp-text-primary)'; e.currentTarget.style.background = 'rgba(108, 99, 255, 0.15)'; e.currentTarget.style.boxShadow = 'none'; } }}
+                  onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.color = 'var(--qp-text-secondary)'; e.currentTarget.style.background = 'transparent'; } }}
                   title={sidebarCollapsed ? tab.label : ''}
                 >
                   <div className="flex items-center justify-center w-5 h-5" style={{ color: isActive ? 'var(--qp-primary)' : 'inherit' }}>
