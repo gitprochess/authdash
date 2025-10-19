@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowRight, MessageSquare, Zap, Globe, Server, Database, Shield, CheckCircle, Clock, Code, Rocket, Terminal, Sparkles, Play, Bot, Gauge, Lock } from 'lucide-react';
+import { ArrowRight, MessageSquare, Zap, Globe, Server, Database, Shield, CheckCircle, Clock, Code, Rocket, Terminal, Sparkles, Play, Bot, Gauge, Lock, Container } from 'lucide-react';
 import { CyaphireLogo } from '../UI/CyaphireLogo';
 import { LoginForm } from '../Auth/LoginForm';
 import { SignupForm } from '../Auth/SignupForm';
