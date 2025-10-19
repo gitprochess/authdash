@@ -7,6 +7,7 @@ import { ContainerManager } from '../Containers/ContainerManager';
 import { DatabaseManager } from '../Database/DatabaseManager';
 import { SettingsPanel } from '../Settings/SettingsPanel';
 import { HelpPanel } from '../Help/HelpPanel';
+import { FlyingIcons } from '../UI/FlyingIcons';
 import { useTheme } from '../../contexts/ThemeContext';
 
 type TabType = 'containers' | 'databases' | 'ssh' | 'chat' | 'help' | 'profile' | 'settings';
@@ -66,6 +67,7 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen h-screen flex flex-col overflow-hidden" style={{ background: 'var(--qp-bg-main)' }}>
+      <FlyingIcons />
       <Header />
 
       <div className="flex-1 flex overflow-hidden">
@@ -98,14 +100,14 @@ export const Dashboard: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center' : 'space-x-3'} px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative border`}
+                  className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center' : 'space-x-3'} px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative border ${tab.id === 'chat' && isActive ? 'ai-tab-special' : ''}`}
                   style={{
                     background: isActive ? 'var(--gradient-ai)' : 'transparent',
                     color: isActive ? 'var(--qp-text-primary)' : 'var(--qp-text-secondary)',
                     borderColor: isActive ? 'var(--qp-border-hover)' : 'transparent',
                     boxShadow: isActive ? 'var(--qp-shadow-glow)' : 'none'
                   }}
-                  onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.color = 'var(--qp-text-primary)'; e.currentTarget.style.background = 'rgba(108, 99, 255, 0.05)'; } }}
+                  onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.color = 'var(--qp-text-primary)'; e.currentTarget.style.background = 'rgba(124, 58, 237, 0.05)'; } }}
                   onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.color = 'var(--qp-text-secondary)'; e.currentTarget.style.background = 'transparent'; } }}
                   title={sidebarCollapsed ? tab.label : ''}
                 >

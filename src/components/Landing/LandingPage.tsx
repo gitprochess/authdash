@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, MessageSquare, Zap, Globe, Server, Database, Shield, CheckCircle, Clock, Code, Rocket, Terminal, Sparkles, Play, Bot, Gauge, Lock, Container } from 'lucide-react';
 import { CyaphireLogo } from '../UI/CyaphireLogo';
+import { FlyingIcons } from '../UI/FlyingIcons';
 import { LoginForm } from '../Auth/LoginForm';
 import { SignupForm } from '../Auth/SignupForm';
 import { OTPForm } from '../Auth/OTPForm';
@@ -30,7 +31,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onAuthSuccess }) => {
 
   if (currentStep === 'login') {
     return (
-      <div className="min-h-screen bg-bolt-dark-950 flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'var(--qp-bg-main)' }}>
+        <FlyingIcons />
         <div className="w-full max-w-md mx-auto">
           <div className="text-center mb-8">
             <button
