@@ -145,49 +145,143 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onAuthSuccess }) => {
         </header>
 
         {/* Hero Section */}
-        <section className="px-6 py-24 md:py-32">
-          <div className="max-w-7xl mx-auto">
+        <section className="px-6 py-24 md:py-32 relative overflow-hidden">
+          {/* Floating Elements Background */}
+          <div className="absolute inset-0 pointer-events-none">
+            {/* Animated Code Snippets */}
+            <div className="absolute top-20 left-[10%] animate-float-slow opacity-20">
+              <div className="glass rounded-lg px-4 py-2 text-xs font-mono text-purple-400 border border-purple-500/30">
+                npm run deploy
+              </div>
+            </div>
+            <div className="absolute top-40 right-[15%] animate-float-delayed opacity-20">
+              <div className="glass rounded-lg px-4 py-2 text-xs font-mono text-cyan-400 border border-cyan-500/30">
+                docker build -t app
+              </div>
+            </div>
+            <div className="absolute bottom-40 left-[20%] animate-float opacity-20">
+              <div className="glass rounded-lg px-4 py-2 text-xs font-mono text-blue-400 border border-blue-500/30">
+                kubectl apply -f
+              </div>
+            </div>
+
+            {/* Orbiting Icons */}
+            <div className="absolute top-1/2 left-[5%] -translate-y-1/2 animate-orbit opacity-30">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/20 backdrop-blur-sm flex items-center justify-center border border-purple-500/30">
+                <Database className="w-6 h-6 text-purple-400" />
+              </div>
+            </div>
+            <div className="absolute top-1/3 right-[8%] animate-orbit-reverse opacity-30">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 backdrop-blur-sm flex items-center justify-center border border-cyan-500/30">
+                <Server className="w-6 h-6 text-cyan-400" />
+              </div>
+            </div>
+            <div className="absolute bottom-1/3 right-[10%] animate-orbit-slow opacity-30">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 backdrop-blur-sm flex items-center justify-center border border-blue-500/30">
+                <Globe className="w-6 h-6 text-blue-400" />
+              </div>
+            </div>
+          </div>
+
+          <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center max-w-4xl mx-auto">
               {/* Badge */}
-              <div className="inline-flex items-center px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm mb-8 group hover:border-purple-500/50 transition-all duration-300">
+              <div className="inline-flex items-center px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm mb-8 group hover:border-purple-500/50 transition-all duration-300 hover:scale-105">
                 <Sparkles className="w-4 h-4 mr-2 text-purple-400 animate-pulse" />
                 <span className="text-sm font-medium text-purple-300">AI-Powered Deployment Platform</span>
+                <div className="ml-2 w-2 h-2 bg-purple-400 rounded-full animate-ping"></div>
               </div>
 
-              {/* Main Heading */}
+              {/* Main Heading with typing effect */}
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
-                <span className="bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent inline-block animate-fade-in">
                   Deploy Applications
                 </span>
                 <br />
-                <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent animate-in">
+                <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent inline-block animate-gradient-x">
                   Through AI Conversations
                 </span>
               </h1>
 
               {/* Subheading */}
-              <p className="text-xl md:text-2xl text-gray-400 mb-12 leading-relaxed max-w-3xl mx-auto">
+              <p className="text-xl md:text-2xl text-gray-400 mb-8 leading-relaxed max-w-3xl mx-auto animate-fade-in-up">
                 Cyaphire AI X transforms natural language into production-ready deployments.
                 Just describe what you want, and our AI handles the entire DevOps pipeline.
               </p>
 
+              {/* Feature Pills */}
+              <div className="flex flex-wrap items-center justify-center gap-3 mb-12 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                <div className="group px-4 py-2 rounded-full border border-green-500/30 bg-green-500/10 backdrop-blur-sm hover:scale-105 transition-transform">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="text-sm text-green-300 font-medium">3min Deploy</span>
+                  </div>
+                </div>
+                <div className="group px-4 py-2 rounded-full border border-blue-500/30 bg-blue-500/10 backdrop-blur-sm hover:scale-105 transition-transform">
+                  <div className="flex items-center space-x-2">
+                    <Shield className="w-3 h-3 text-blue-400" />
+                    <span className="text-sm text-blue-300 font-medium">Auto SSL</span>
+                  </div>
+                </div>
+                <div className="group px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 backdrop-blur-sm hover:scale-105 transition-transform">
+                  <div className="flex items-center space-x-2">
+                    <Zap className="w-3 h-3 text-cyan-400" />
+                    <span className="text-sm text-cyan-300 font-medium">Auto Scale</span>
+                  </div>
+                </div>
+                <div className="group px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm hover:scale-105 transition-transform">
+                  <div className="flex items-center space-x-2">
+                    <Database className="w-3 h-3 text-purple-400" />
+                    <span className="text-sm text-purple-300 font-medium">DB Included</span>
+                  </div>
+                </div>
+              </div>
+
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
                 <button
                   onClick={() => setCurrentStep('signup')}
-                  className="group px-8 py-4 futuristic-btn text-white rounded-lg text-lg font-semibold flex items-center space-x-3 shadow-2xl shadow-purple-900/50"
+                  className="group px-8 py-4 futuristic-btn text-white rounded-lg text-lg font-semibold flex items-center space-x-3 shadow-2xl shadow-purple-900/50 hover:scale-105 transition-transform"
                 >
-                  <Bot className="w-5 h-5" />
+                  <Bot className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                   <span>Start Deploying with AI</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
-                <button className="px-8 py-4 border border-white/20 text-white rounded-lg text-lg font-medium hover:bg-white/5 transition-all duration-200 backdrop-blur-sm">
-                  Watch Demo
+                <button className="px-8 py-4 border border-white/20 text-white rounded-lg text-lg font-medium hover:bg-white/5 transition-all duration-200 backdrop-blur-sm flex items-center space-x-2 group">
+                  <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  <span>Watch Demo</span>
                 </button>
               </div>
 
+              {/* Tech Stack Logos Carousel */}
+              <div className="mb-20 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+                <p className="text-xs text-gray-600 uppercase tracking-wider mb-4">Supports all major technologies</p>
+                <div className="flex flex-wrap items-center justify-center gap-6 opacity-60">
+                  <div className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                    <Code className="w-5 h-5 text-cyan-400" />
+                    <span className="text-sm text-gray-300 font-medium">React</span>
+                  </div>
+                  <div className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                    <Terminal className="w-5 h-5 text-green-400" />
+                    <span className="text-sm text-gray-300 font-medium">Node.js</span>
+                  </div>
+                  <div className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                    <Server className="w-5 h-5 text-blue-400" />
+                    <span className="text-sm text-gray-300 font-medium">Docker</span>
+                  </div>
+                  <div className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                    <Database className="w-5 h-5 text-purple-400" />
+                    <span className="text-sm text-gray-300 font-medium">PostgreSQL</span>
+                  </div>
+                  <div className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
+                    <Code className="w-5 h-5 text-yellow-400" />
+                    <span className="text-sm text-gray-300 font-medium">Python</span>
+                  </div>
+                </div>
+              </div>
+
               {/* Animated Conversation Demo */}
-              <div className="glass rounded-2xl p-8 vision-glow max-w-3xl mx-auto">
+              <div className="glass rounded-2xl p-8 vision-glow max-w-3xl mx-auto hover:scale-[1.02] transition-transform duration-500 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
                 <div className="flex items-center space-x-2 mb-6">
                   <MessageSquare className="w-5 h-5 text-purple-400" />
                   <span className="text-sm font-medium text-gray-400">Live AI Deployment</span>
