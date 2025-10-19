@@ -7,7 +7,7 @@ export const Header: React.FC = () => {
   const { user, logout, currentSSHHost } = useAuth();
 
   return (
-    <header className="border-b backdrop-blur-md relative z-20 shadow-lg flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: 'rgba(26, 27, 36, 0.5)' }}>
+    <header className="border-b backdrop-blur-md relative z-20 shadow-lg flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: 'var(--qp-bg-topbar)' }}>
       <div className="px-6 flex justify-between items-center h-14">
         <div className="flex items-center">
           <CyaphireLogo size="sm" />

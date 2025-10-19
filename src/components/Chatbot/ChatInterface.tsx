@@ -184,10 +184,10 @@ export const ChatInterface: React.FC = () => {
   }, [messages]);
   return (
     <div className="h-full flex gap-6 overflow-hidden">
-      {/* Chat Panel - Visual Centerpiece */}
-      <div className="flex-1 flex flex-col chat-centerpiece rounded-2xl overflow-hidden" style={{ background: 'var(--qp-bg-panel)' }}>
-        {/* Chat Header - Quantum Pulse Theme */}
-        <div className="px-8 py-5 border-b flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: 'rgba(26, 27, 36, 0.5)' }}>
+      {/* Chat Panel - Visual Centerpiece with Gradient */}
+      <div className="flex-1 flex flex-col chat-centerpiece rounded-2xl overflow-hidden" style={{ background: 'var(--gradient-chat)' }}>
+        {/* Chat Header - Cyber Theme */}
+        <div className="px-8 py-5 border-b flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: 'rgba(29, 26, 46, 0.5)' }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg" style={{ background: 'var(--gradient-ai)', boxShadow: 'var(--qp-shadow-glow)' }}>
@@ -208,8 +208,8 @@ export const ChatInterface: React.FC = () => {
           </div>
         </div>
 
-        {/* Messages Area - Expanded and Centered */}
-        <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6 min-h-0" style={{ background: 'rgba(14, 14, 18, 0.3)' }}>
+        {/* Messages Area - Gradient Background */}
+        <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6 min-h-0" style={{ background: 'transparent' }}>
             {messageComponents}
             
           {loading && (
@@ -237,8 +237,8 @@ export const ChatInterface: React.FC = () => {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input Area - Glowing Quantum Design */}
-        <form onSubmit={handleSendMessage} className="px-8 py-5 border-t flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: 'rgba(26, 27, 36, 0.5)' }}>
+        {/* Input Area - Cyber Design */}
+        <form onSubmit={handleSendMessage} className="px-8 py-5 border-t flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: 'rgba(29, 26, 46, 0.6)' }}>
           <div className="flex items-center space-x-4">
             <input
               ref={inputRef}
