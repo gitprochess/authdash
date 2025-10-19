@@ -145,77 +145,97 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onAuthSuccess }) => {
         </header>
 
         {/* Hero Section */}
-        <section className="px-6 py-16 md:py-24 min-h-[90vh] flex items-center justify-center">
-          <div className="max-w-7xl mx-auto w-full">
+        <section className="px-6 py-24 md:py-32">
+          <div className="max-w-7xl mx-auto">
             <div className="text-center max-w-4xl mx-auto">
+              {/* Badge */}
+              <div className="inline-flex items-center px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm mb-8 group hover:border-purple-500/50 transition-all duration-300">
+                <Sparkles className="w-4 h-4 mr-2 text-purple-400 animate-pulse" />
+                <span className="text-sm font-medium text-purple-300">AI-Powered Deployment Platform</span>
+              </div>
+
               {/* Main Heading */}
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1] tracking-tight">
-                <span className="text-white">
-                  Build and deploy on the
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
+                <span className="bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
+                  Deploy Applications
                 </span>
                 <br />
-                <span className="bg-gradient-to-r from-white via-white to-gray-400 bg-clip-text text-transparent">
-                  AI Cloud.
+                <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent animate-in">
+                  Through AI Conversations
                 </span>
               </h1>
 
               {/* Subheading */}
-              <p className="text-lg md:text-xl text-gray-400 mb-12 leading-relaxed max-w-2xl mx-auto">
-                Cyaphire provides the developer tools and cloud infrastructure<br className="hidden md:block" />
-                to build, scale, and secure a faster, more personalized web.
+              <p className="text-xl md:text-2xl text-gray-400 mb-12 leading-relaxed max-w-3xl mx-auto">
+                Cyaphire AI X transforms natural language into production-ready deployments.
+                Just describe what you want, and our AI handles the entire DevOps pipeline.
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-24">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
                 <button
                   onClick={() => setCurrentStep('signup')}
-                  className="group px-6 py-3 bg-white text-black rounded-lg text-base font-medium flex items-center space-x-2 hover:bg-gray-100 transition-all duration-200"
+                  className="group px-8 py-4 futuristic-btn text-white rounded-lg text-lg font-semibold flex items-center space-x-3 shadow-2xl shadow-purple-900/50"
                 >
-                  <span className="flex items-center space-x-2">
-                    <span className="text-lg">▲</span>
-                    <span>Start Deploying</span>
-                  </span>
+                  <Bot className="w-5 h-5" />
+                  <span>Start Deploying with AI</span>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
-                <button className="px-6 py-3 bg-gray-900 border border-gray-800 text-white rounded-lg text-base font-medium hover:bg-gray-800 hover:border-gray-700 transition-all duration-200">
-                  Get a Demo
+                <button className="px-8 py-4 border border-white/20 text-white rounded-lg text-lg font-medium hover:bg-white/5 transition-all duration-200 backdrop-blur-sm">
+                  Watch Demo
                 </button>
               </div>
 
-              {/* 3D Pyramid Visual */}
-              <div className="relative h-[400px] md:h-[500px] flex items-center justify-center">
-                {/* Gradient Background Effect */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-full h-full max-w-[800px] bg-gradient-to-r from-cyan-500/20 via-transparent to-orange-500/20 blur-3xl"></div>
+              {/* Animated Conversation Demo */}
+              <div className="glass rounded-2xl p-8 vision-glow max-w-3xl mx-auto">
+                <div className="flex items-center space-x-2 mb-6">
+                  <MessageSquare className="w-5 h-5 text-purple-400" />
+                  <span className="text-sm font-medium text-gray-400">Live AI Deployment</span>
+                  <div className="ml-auto flex space-x-1">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                  </div>
                 </div>
 
-                {/* Pyramid Shape */}
-                <div className="relative w-64 h-64 md:w-80 md:h-80" style={{
-                  transform: 'perspective(1000px) rotateX(5deg)',
-                  animation: 'float 6s ease-in-out infinite'
-                }}>
-                  {/* Front Face */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative" style={{
-                      width: 0,
-                      height: 0,
-                      borderLeft: '160px solid transparent',
-                      borderRight: '160px solid transparent',
-                      borderBottom: '280px solid rgba(15, 15, 15, 0.8)',
-                      filter: 'drop-shadow(0 0 40px rgba(124, 58, 237, 0.3))'
-                    }}>
-                      {/* Layered Lines */}
-                      {Array.from({ length: 20 }).map((_, i) => (
-                        <div
-                          key={i}
-                          className="absolute left-1/2 -translate-x-1/2"
-                          style={{
-                            bottom: `${i * 14}px`,
-                            width: `${300 - i * 15}px`,
-                            height: '1px',
-                            background: `linear-gradient(90deg, transparent, rgba(124, 58, 237, ${0.3 - i * 0.015}), transparent)`
-                          }}
-                        />
-                      ))}
+                <div className="space-y-4 font-mono text-sm">
+                  <div className="flex items-start space-x-3 animate-in" style={{ animationDelay: '0.5s' }}>
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center flex-shrink-0">
+                      <span className="text-xs font-bold">YOU</span>
+                    </div>
+                    <div className="bg-white/5 rounded-2xl rounded-tl-none px-4 py-3 flex-1">
+                      <p className="text-gray-300">Deploy a React frontend with Node.js backend and PostgreSQL database</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-3 animate-in" style={{ animationDelay: '1s' }}>
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 flex items-center justify-center flex-shrink-0">
+                      <Bot className="w-4 h-4" />
+                    </div>
+                    <div className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-2xl rounded-tl-none px-4 py-3 flex-1">
+                      <p className="text-gray-300 mb-3">I'll deploy that for you right now!</p>
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2 text-xs">
+                          <CheckCircle className="w-3 h-3 text-green-400" />
+                          <span className="text-gray-400">Analyzing React application structure...</span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-xs">
+                          <CheckCircle className="w-3 h-3 text-green-400" />
+                          <span className="text-gray-400">Containerizing Node.js backend...</span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-xs">
+                          <CheckCircle className="w-3 h-3 text-green-400" />
+                          <span className="text-gray-400">Provisioning PostgreSQL database...</span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-xs">
+                          <CheckCircle className="w-3 h-3 text-green-400" />
+                          <span className="text-gray-400">Configuring SSL & DNS...</span>
+                        </div>
+                        <div className="flex items-center space-x-2 text-xs pt-2 border-t border-white/10">
+                          <Rocket className="w-3 h-3 text-cyan-400" />
+                          <span className="text-cyan-400 font-semibold">Live at: https://your-app.cyaphire.live</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -224,72 +244,318 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onAuthSuccess }) => {
           </div>
         </section>
 
-        {/* Trusted By Section */}
-        <section className="px-6 py-16 border-t border-white/5">
-          <div className="max-w-7xl mx-auto text-center">
-            <h3 className="text-sm text-gray-500 font-medium mb-12">Trusted by application developers</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center justify-items-center opacity-50">
-              <div className="text-2xl font-bold text-gray-600">React</div>
-              <div className="text-2xl font-bold text-gray-600">Node.js</div>
-              <div className="text-2xl font-bold text-gray-600">Docker</div>
-              <div className="text-2xl font-bold text-gray-600">PostgreSQL</div>
-            </div>
-          </div>
-        </section>
-
-        {/* How It Works */}
-        <section className="px-6 py-24 md:py-32">
+        {/* AI Capabilities Section */}
+        <section className="px-6 py-24 md:py-32 border-t border-white/5">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-20">
               <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-white to-bolt-dark-300 bg-clip-text text-transparent">
-                  Three Steps to Production
+                <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                  Powered by Advanced AI
                 </span>
               </h2>
-              <p className="text-xl text-bolt-dark-300 max-w-2xl mx-auto">
-                No YAML. No scripts. No complexity. Just conversation.
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Our AI understands infrastructure, security, scaling, and best practices.
+                It's like having a senior DevOps engineer on demand.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  step: '01',
-                  icon: MessageSquare,
-                  title: 'Describe Your App',
-                  description: 'Tell our AI what you want to deploy in plain English',
-                  color: 'from-purple-500 to-purple-600'
-                },
-                {
-                  step: '02',
-                  icon: Bot,
-                  title: 'AI Configures Everything',
-                  description: 'Automated setup of Docker, servers, databases, and SSL',
-                  color: 'from-blue-500 to-blue-600'
-                },
-                {
-                  step: '03',
-                  icon: Rocket,
-                  title: 'Go Live Instantly',
-                  description: 'Production-ready with HTTPS URL in under 3 minutes',
-                  color: 'from-cyan-500 to-cyan-600'
-                }
-              ].map((item, idx) => {
-                const Icon = item.icon;
-                return (
-                  <div key={idx} className="group relative">
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="relative p-8 rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm hover:border-white/20 transition-all duration-300">
-                      <div className="text-sm font-mono text-bolt-dark-500 mb-4">{item.step}</div>
-                      <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                        <Icon className="w-7 h-7 text-white" />
+            <div className="grid md:grid-cols-2 gap-8 mb-16">
+              {/* Natural Language Understanding */}
+              <div className="glass-strong rounded-2xl p-8 group hover:scale-[1.02] transition-transform duration-300">
+                <div className="flex items-center space-x-4 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+                    <MessageSquare className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">Natural Language Processing</h3>
+                </div>
+                <p className="text-gray-400 leading-relaxed mb-4">
+                  Simply describe your application in plain English. Our AI interprets your requirements,
+                  understands technical context, and translates them into production-ready infrastructure.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2 text-sm text-gray-500">
+                    <CheckCircle className="w-4 h-4 text-purple-400" />
+                    <span>Understands frameworks, databases, and services</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-sm text-gray-500">
+                    <CheckCircle className="w-4 h-4 text-purple-400" />
+                    <span>Detects dependencies and requirements</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-sm text-gray-500">
+                    <CheckCircle className="w-4 h-4 text-purple-400" />
+                    <span>Suggests optimizations and best practices</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Intelligent Infrastructure */}
+              <div className="glass-strong rounded-2xl p-8 group hover:scale-[1.02] transition-transform duration-300">
+                <div className="flex items-center space-x-4 mb-6">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                    <Server className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">Intelligent Infrastructure</h3>
+                </div>
+                <p className="text-gray-400 leading-relaxed mb-4">
+                  AI automatically provisions optimal infrastructure based on your application's needs.
+                  From containers to databases, everything is configured with enterprise-grade security.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2 text-sm text-gray-500">
+                    <CheckCircle className="w-4 h-4 text-blue-400" />
+                    <span>Auto-scaling based on traffic patterns</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-sm text-gray-500">
+                    <CheckCircle className="w-4 h-4 text-blue-400" />
+                    <span>Load balancing and failover handling</span>
+                  </div>
+                  <div className="flex items-center space-x-2 text-sm text-gray-500">
+                    <CheckCircle className="w-4 h-4 text-blue-400" />
+                    <span>SSL certificates and DNS configuration</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div>
+                <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                  &lt;3min
+                </div>
+                <div className="text-sm text-gray-500 font-medium">Average Deploy Time</div>
+              </div>
+              <div>
+                <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                  99.9%
+                </div>
+                <div className="text-sm text-gray-500 font-medium">Uptime SLA</div>
+              </div>
+              <div>
+                <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  10K+
+                </div>
+                <div className="text-sm text-gray-500 font-medium">Apps Deployed</div>
+              </div>
+              <div>
+                <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
+                  24/7
+                </div>
+                <div className="text-sm text-gray-500 font-medium">AI Monitoring</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* How It Works - Detailed */}
+        <section className="px-6 py-24 md:py-32 bg-gradient-to-b from-transparent to-white/[0.01]">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-20">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                  How Cyaphire AI Works
+                </span>
+              </h2>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                From conversation to production in minutes. Zero DevOps knowledge required.
+              </p>
+            </div>
+
+            <div className="space-y-24">
+              {/* Step 1 */}
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                  <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 mb-4">
+                    <span className="text-sm font-mono text-purple-400">Step 01</span>
+                  </div>
+                  <h3 className="text-3xl font-bold text-white mb-4">Chat with AI Assistant</h3>
+                  <p className="text-gray-400 leading-relaxed mb-6">
+                    Simply describe your application in natural language. Tell Cyaphire AI X what you're building,
+                    what frameworks you're using, and any specific requirements. The AI understands technical context
+                    and can answer questions, suggest improvements, and clarify any ambiguities.
+                  </p>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                        <CheckCircle className="w-4 h-4 text-purple-400" />
                       </div>
-                      <h3 className="text-xl font-bold mb-3 text-white">{item.title}</h3>
-                      <p className="text-bolt-dark-300 leading-relaxed">{item.description}</p>
+                      <span className="text-gray-300">Supports all major frameworks and languages</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                        <CheckCircle className="w-4 h-4 text-purple-400" />
+                      </div>
+                      <span className="text-gray-300">AI suggests optimal architecture patterns</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                        <CheckCircle className="w-4 h-4 text-purple-400" />
+                      </div>
+                      <span className="text-gray-300">Real-time clarifications and recommendations</span>
                     </div>
                   </div>
-                );
-              })}
+                </div>
+                <div className="glass-strong rounded-2xl p-6">
+                  <div className="space-y-4 font-mono text-xs">
+                    <div className="flex items-start space-x-2">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center flex-shrink-0">
+                        <span className="text-[10px] font-bold">U</span>
+                      </div>
+                      <div className="bg-white/5 rounded-lg px-3 py-2 flex-1">
+                        <p className="text-gray-300">I need to deploy a React app with authentication</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 flex items-center justify-center flex-shrink-0">
+                        <Bot className="w-3 h-3" />
+                      </div>
+                      <div className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-lg px-3 py-2 flex-1">
+                        <p className="text-gray-300 mb-2">Great! I can help with that. Would you like me to:</p>
+                        <ul className="text-gray-400 space-y-1 text-[10px]">
+                          <li>• Set up OAuth (Google, GitHub) or email/password auth?</li>
+                          <li>• Include a PostgreSQL database for user data?</li>
+                          <li>• Add JWT token management?</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="order-2 md:order-1 glass-strong rounded-2xl p-6">
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-2 text-xs">
+                      <div className="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
+                      </div>
+                      <span className="text-gray-400">Analyzing codebase structure...</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-xs">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      <span className="text-gray-400">Building Docker containers</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-xs">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      <span className="text-gray-400">Setting up environment variables</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-xs">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      <span className="text-gray-400">Provisioning PostgreSQL database</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-xs">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      <span className="text-gray-400">Configuring load balancers</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-xs">
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      <span className="text-gray-400">Generating SSL certificates</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-xs">
+                      <div className="w-4 h-4 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
+                      </div>
+                      <span className="text-gray-400">Deploying to cloud infrastructure...</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="order-1 md:order-2">
+                  <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 mb-4">
+                    <span className="text-sm font-mono text-blue-400">Step 02</span>
+                  </div>
+                  <h3 className="text-3xl font-bold text-white mb-4">AI Builds & Configures</h3>
+                  <p className="text-gray-400 leading-relaxed mb-6">
+                    Our AI automatically handles all the complex DevOps tasks. It analyzes your code, creates
+                    optimized Docker containers, provisions databases, configures networking, sets up SSL,
+                    and deploys everything to production-grade infrastructure.
+                  </p>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                        <Container className="w-4 h-4 text-blue-400" />
+                      </div>
+                      <span className="text-gray-300">Automatic containerization and orchestration</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                        <Database className="w-4 h-4 text-blue-400" />
+                      </div>
+                      <span className="text-gray-300">Database provisioning with automated backups</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                        <Shield className="w-4 h-4 text-blue-400" />
+                      </div>
+                      <span className="text-gray-300">Enterprise security and compliance built-in</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                  <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-4">
+                    <span className="text-sm font-mono text-cyan-400">Step 03</span>
+                  </div>
+                  <h3 className="text-3xl font-bold text-white mb-4">Monitor & Scale with AI</h3>
+                  <p className="text-gray-400 leading-relaxed mb-6">
+                    Once deployed, Cyaphire AI continuously monitors your application's health, performance,
+                    and traffic patterns. It automatically scales resources, optimizes costs, detects anomalies,
+                    and provides intelligent insights to keep your app running smoothly.
+                  </p>
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
+                        <Gauge className="w-4 h-4 text-cyan-400" />
+                      </div>
+                      <span className="text-gray-300">Real-time performance monitoring</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
+                        <Zap className="w-4 h-4 text-cyan-400" />
+                      </div>
+                      <span className="text-gray-300">Intelligent auto-scaling based on demand</span>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center flex-shrink-0">
+                        <Globe className="w-4 h-4 text-cyan-400" />
+                      </div>
+                      <span className="text-gray-300">Global CDN and edge optimization</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="glass-strong rounded-2xl p-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-400">Application Status</span>
+                      <span className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-green-500/20 border border-green-500/30">
+                        <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                        <span className="text-xs text-green-400 font-medium">Healthy</span>
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-white/5 rounded-lg p-3">
+                        <div className="text-2xl font-bold text-white mb-1">1.2K</div>
+                        <div className="text-xs text-gray-500">Requests/min</div>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-3">
+                        <div className="text-2xl font-bold text-white mb-1">45ms</div>
+                        <div className="text-xs text-gray-500">Avg Response</div>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-3">
+                        <div className="text-2xl font-bold text-white mb-1">99.9%</div>
+                        <div className="text-xs text-gray-500">Uptime</div>
+                      </div>
+                      <div className="bg-white/5 rounded-lg p-3">
+                        <div className="text-2xl font-bold text-white mb-1">3</div>
+                        <div className="text-xs text-gray-500">Active Instances</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
