@@ -103,23 +103,24 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onAuthSuccess }) => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden relative">
-      {/* Grid Background */}
-      <div className="fixed inset-0 pointer-events-none">
+    <div className="min-h-screen bg-black text-white overflow-y-auto overflow-x-hidden relative" style={{ background: 'var(--qp-bg-main)' }}>
+      <FlyingIcons />
+
+      {/* Subtle Grid Background */}
+      <div className="fixed inset-0 pointer-events-none opacity-30">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(rgba(124, 58, 237, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(124, 58, 237, 0.1) 1px, transparent 1px)
+            linear-gradient(rgba(124, 58, 237, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(124, 58, 237, 0.05) 1px, transparent 1px)
           `,
-          backgroundSize: '80px 80px',
-          maskImage: 'radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%)'
+          backgroundSize: '100px 100px'
         }}></div>
       </div>
 
-      {/* Gradient Overlays */}
+      {/* Professional Gradient Overlays */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-gradient-radial from-purple-600/30 via-blue-600/20 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-950/10 to-black/50"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[800px] bg-gradient-radial from-purple-600/10 via-blue-600/5 to-transparent rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-10">

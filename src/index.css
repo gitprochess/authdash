@@ -145,16 +145,16 @@ body::before {
   --gradient-glow: radial-gradient(circle at center, var(--qp-glow-primary), transparent);
 }
 
-/* Apple-like Glassmorphism */
+/* Professional Glassmorphism */
 .glass {
-  background: rgba(26, 26, 46, 0.6);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(26, 26, 46, 0.7);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(124, 58, 237, 0.15);
   position: relative;
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .glass::before {
@@ -167,8 +167,8 @@ body::before {
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  opacity: 0.3;
-  animation: borderRotate 6s linear infinite;
+  opacity: 0.2;
+  animation: borderRotate 10s linear infinite;
   background-size: 300% 100%;
 }
 
@@ -179,29 +179,28 @@ body::before {
   border-radius: inherit;
   background: var(--gradient-glow);
   opacity: 0;
-  filter: blur(15px);
-  transition: opacity 0.3s ease;
+  filter: blur(20px);
+  transition: opacity 0.4s ease;
   z-index: -1;
 }
 
 .glass:hover::before {
-  opacity: 0.8;
-  animation: borderRotate 2s linear infinite;
-}
-
-.glass:hover::after {
   opacity: 0.3;
 }
 
+.glass:hover::after {
+  opacity: 0.15;
+}
+
 .glass-strong {
-  background: rgba(26, 26, 46, 0.8);
-  backdrop-filter: blur(30px) saturate(200%);
-  -webkit-backdrop-filter: blur(30px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(32px) saturate(160%);
+  -webkit-backdrop-filter: blur(32px) saturate(160%);
+  border: 1px solid rgba(124, 58, 237, 0.2);
   box-shadow:
-    0 12px 48px rgba(0, 0, 0, 0.4),
-    0 0 40px rgba(124, 58, 237, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+    0 8px 40px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(124, 58, 237, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 @keyframes borderRotate {
@@ -717,18 +716,18 @@ button:active {
   animation: typingPulse 1.5s ease-in-out infinite;
 }
 
-/* AI Message Glow - Reduced */
+/* AI Message Glow - Subtle Professional */
 @keyframes aiGlow {
   0%, 100% {
-    box-shadow: 0 0 8px var(--qp-glow-primary), 0 0 12px transparent;
+    box-shadow: 0 2px 12px rgba(124, 58, 237, 0.15);
   }
   50% {
-    box-shadow: 0 0 12px var(--qp-glow-primary), 0 0 18px var(--qp-glow-primary);
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.2);
   }
 }
 
 .ai-message-glow {
-  animation: aiGlow 4s ease-in-out infinite;
+  animation: aiGlow 5s ease-in-out infinite;
 }
 
 /* Cyan text glow on hover */
@@ -737,13 +736,13 @@ button:active {
   transition: text-shadow 0.3s ease;
 }
 
-/* Chat centerpiece glow - Reduced */
+/* Chat centerpiece - Professional */
 .chat-centerpiece {
-  box-shadow: var(--qp-shadow-glow);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
   border: 1px solid var(--qp-border);
 }
 
-/* Special AI Tab Highlight */
+/* Special AI Tab Highlight - Professional */
 .ai-tab-special {
   position: relative;
   background: var(--gradient-ai) !important;
@@ -751,24 +750,24 @@ button:active {
   box-shadow: var(--qp-shadow-glow-strong) !important;
 }
 
-.ai-tab-special::before {
-  content: '✨';
+.ai-tab-special::after {
+  content: '';
   position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 14px;
-  animation: sparkle 2s ease-in-out infinite;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--gradient-button);
+  border-radius: 0 2px 2px 0;
+  animation: aiPulse 3s ease-in-out infinite;
 }
 
-@keyframes sparkle {
+@keyframes aiPulse {
   0%, 100% {
-    opacity: 0.5;
-    transform: translateY(-50%) scale(1);
+    opacity: 0.6;
   }
   50% {
     opacity: 1;
-    transform: translateY(-50%) scale(1.2);
   }
 }
 

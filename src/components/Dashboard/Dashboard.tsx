@@ -67,7 +67,6 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen h-screen flex flex-col overflow-hidden" style={{ background: 'var(--qp-bg-main)' }}>
-      <FlyingIcons />
       <Header />
 
       <div className="flex-1 flex overflow-hidden">
