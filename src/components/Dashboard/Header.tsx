@@ -8,12 +8,12 @@ export const Header: React.FC = () => {
 
   return (
     <header className="border-b backdrop-blur-md relative z-20 shadow-lg flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: 'var(--qp-bg-topbar)' }}>
-      <div className="px-6 flex justify-between items-center h-14">
+      <div className="px-3 sm:px-4 md:px-6 flex justify-between items-center h-14">
         <div className="flex items-center">
           <CyaphireLogo size="sm" />
         </div>
 
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 md:space-x-3">
           {/* SSH Status - Quantum Theme */}
           <div className={`flex items-center space-x-2 text-xs px-3 py-1.5 rounded-lg border transition-all duration-200`}
             style={{
@@ -43,8 +43,8 @@ export const Header: React.FC = () => {
 
           {/* User Info */}
           <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg border" style={{ background: 'rgba(26, 27, 36, 0.6)', borderColor: 'var(--qp-border)' }}>
-            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'var(--gradient-ai)' }}>
-              <User className="w-4 h-4" style={{ color: 'var(--qp-primary)' }} />
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center profile-gradient">
+              <User className="w-4 h-4 text-white" />
             </div>
             <span className="hidden sm:block text-sm font-medium" style={{ color: 'var(--qp-text-primary)' }}>{user?.name}</span>
           </div>

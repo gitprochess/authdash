@@ -69,11 +69,11 @@ export const Dashboard: React.FC = () => {
     <div className="min-h-screen h-screen flex flex-col overflow-hidden" style={{ background: 'var(--qp-bg-main)' }}>
       <Header />
 
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative">
         {/* Sidebar - Matte Section */}
         <aside className={`border-r flex flex-col transition-all duration-300 ease-in-out ${
           sidebarCollapsed ? 'w-16' : 'w-64'
-        } lg:relative absolute lg:translate-x-0 ${sidebarCollapsed ? '-translate-x-full lg:translate-x-0' : 'translate-x-0'} z-30 h-full`} style={{ borderColor: 'var(--qp-border)', background: 'var(--qp-bg-sidebar)' }}>
+        } lg:relative absolute inset-y-0 left-0 lg:translate-x-0 ${sidebarCollapsed ? '-translate-x-full lg:translate-x-0' : 'translate-x-0'} z-30 h-full`} style={{ borderColor: 'var(--qp-border)', background: 'var(--qp-bg-sidebar)' }}>
           {/* Sidebar Toggle Button */}
           <div className="p-3 border-b flex items-center justify-between" style={{ borderColor: 'var(--qp-border)' }}>
             {!sidebarCollapsed && (
@@ -99,7 +99,7 @@ export const Dashboard: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center' : 'space-x-3'} px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative border ${tab.id === 'chat' && isActive ? 'ai-tab-special' : ''}`}
+                  className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center' : 'space-x-3'} px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative border ${tab.id === 'chat' ? 'ai-tab-shine' : ''}`}
                   style={{
                     background: isActive ? '#1A1A2E' : 'transparent',
                     color: isActive ? 'var(--qp-text-primary)' : 'var(--qp-text-secondary)',

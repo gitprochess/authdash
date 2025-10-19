@@ -285,7 +285,7 @@ export const LogsPanel: React.FC = () => {
   }, [logs, getLogLevelStyle, formatTimestamp, copyLogToClipboard, copiedLogId]);
 
   const LogsContainer = ({ className = "" }: { className?: string }) => (
-    <div className={`flex flex-col h-full min-h-0 rounded-2xl overflow-hidden transition-all duration-300 ${className} ${isCollapsed ? 'w-12' : ''}`} style={{ background: 'var(--qp-bg-logs)', border: '1px solid var(--qp-border)', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.9)' }}>
+    <div className={`flex flex-col h-full min-h-0 glass-curved overflow-hidden transition-all duration-300 ${className} ${isCollapsed ? 'w-12' : ''}`} style={{ background: 'var(--qp-bg-logs)' }}>
       {/* Header */}
       <div className="flex-shrink-0 px-4 py-3 border-b" style={{ borderColor: 'var(--qp-border)', background: '#0A0A0A' }}>
         <div className="flex items-center justify-between">

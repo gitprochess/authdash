@@ -183,11 +183,11 @@ export const ChatInterface: React.FC = () => {
     ));
   }, [messages]);
   return (
-    <div className="h-full flex gap-6 overflow-hidden">
+    <div className="h-full flex flex-col lg:flex-row gap-4 lg:gap-6 overflow-hidden">
       {/* Chat Panel - Visual Centerpiece */}
-      <div className="flex-1 flex flex-col chat-centerpiece rounded-2xl overflow-hidden" style={{ background: 'var(--qp-bg-chat)' }}>
+      <div className="flex-1 flex flex-col glass-curved overflow-hidden" style={{ background: 'var(--qp-bg-chat)' }}>
         {/* Chat Header - Matte */}
-        <div className="px-8 py-5 border-b flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: '#0A0A0A' }}>
+        <div className="px-4 sm:px-6 md:px-8 py-4 md:py-5 border-b flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: '#0A0A0A' }}>
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: '#1A1A2E', boxShadow: '0 1px 4px rgba(0, 0, 0, 0.8)' }}>
@@ -209,7 +209,7 @@ export const ChatInterface: React.FC = () => {
         </div>
 
         {/* Messages Area - Gradient Background */}
-        <div className="flex-1 overflow-y-auto px-8 py-6 space-y-6 min-h-0" style={{ background: 'transparent' }}>
+        <div className="flex-1 overflow-y-auto px-4 sm:px-6 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6 min-h-0" style={{ background: 'transparent' }}>
             {messageComponents}
             
           {loading && (
@@ -238,7 +238,7 @@ export const ChatInterface: React.FC = () => {
         </div>
 
         {/* Input Area - Matte Design */}
-        <form onSubmit={handleSendMessage} className="px-8 py-5 border-t flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: '#0A0A0A' }}>
+        <form onSubmit={handleSendMessage} className="px-4 sm:px-6 md:px-8 py-4 md:py-5 border-t flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: '#0A0A0A' }}>
           <div className="flex items-center space-x-4">
             <input
               ref={inputRef}
@@ -275,7 +275,7 @@ export const ChatInterface: React.FC = () => {
       </div>
 
       {/* Logs Panel - Blended Design */}
-      <div className="w-80 flex-shrink-0 hidden lg:block">
+      <div className="w-full lg:w-80 flex-shrink-0 h-64 lg:h-auto">
         <LogsPanel />
       </div>
     </div>

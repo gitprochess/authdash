@@ -20,6 +20,46 @@ body::before {
   z-index: 0;
 }
 
+/* AI Tab Shine Animation */
+@keyframes shineEffect {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  50%, 100% {
+    transform: translateX(200%) rotate(45deg);
+  }
+}
+
+.ai-tab-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-tab-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(108, 99, 255, 0.4), transparent);
+  animation: shineEffect 3s infinite;
+}
+
+/* Glass Effect with Curves */
+.glass-curved {
+  background: rgba(15, 15, 15, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(108, 99, 255, 0.2);
+}
+
+/* Profile Icon Gradient */
+.profile-gradient {
+  background: linear-gradient(135deg, #8B4513 0%, #DC143C 100%);
+}
+
 /* Flying Tech Icons */
 .flying-icons {
   position: fixed;

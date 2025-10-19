@@ -262,7 +262,7 @@ export const ContainerManager: React.FC = () => {
         </div>
       )}
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
         {containers.map((container, index) => {
           // Use the specific container's ID for tracking stopping state
           const isBeingStopped = stoppingContainers.has(container.containerId);
@@ -271,7 +271,7 @@ export const ContainerManager: React.FC = () => {
           return (
             <div
               key={`${container.projectName}-${container.hostPort}-${container.containerId}-${index}`}
-              className="glass rounded-2xl p-6 hover:bg-white/5 transition-all duration-200 vision-glow"
+              className="glass-curved p-6 hover:bg-white/5 transition-all duration-300"
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-2">
