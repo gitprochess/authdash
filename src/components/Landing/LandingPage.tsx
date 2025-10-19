@@ -3,10 +3,8 @@ import { ArrowRight, MessageSquare, Zap, Globe, Server, Database, Shield, CheckC
 import { CyaphireLogo } from '../UI/CyaphireLogo';
 import { FlyingIcons } from '../UI/FlyingIcons';
 import { LoginForm } from '../Auth/LoginForm';
-import { SignupForm } from '../Auth/SignupForm';
-import { OTPForm } from '../Auth/OTPForm';
 
-type AuthStep = 'landing' | 'login' | 'signup' | 'otp';
+type AuthStep = 'landing' | 'login';
 
 interface LandingPageProps {
   onAuthSuccess: () => void;
@@ -14,16 +12,6 @@ interface LandingPageProps {
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onAuthSuccess }) => {
   const [currentStep, setCurrentStep] = useState<AuthStep>('landing');
-  const [signupEmail, setSignupEmail] = useState('');
-
-  const handleSignupSuccess = (email: string) => {
-    setSignupEmail(email);
-    setCurrentStep('otp');
-  };
-
-  const handleOTPSuccess = () => {
-    setCurrentStep('login');
-  };
 
   const handleBackToLanding = () => {
     setCurrentStep('landing');
@@ -45,62 +33,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onAuthSuccess }) => {
           </div>
 
           <LoginForm />
-
-          <div className="text-center mt-6">
-            <button
-              onClick={() => setCurrentStep('signup')}
-              className="text-bolt-dark-400 hover:text-bolt-accent-blue transition-colors duration-200"
-            >
-              Don't have an account? <span className="font-semibold text-bolt-accent-blue">Sign up</span>
-            </button>
-          </div>
         </div>
       </div>
     );
   }
 
-  if (currentStep === 'signup') {
-    return (
-      <div className="min-h-screen bg-bolt-dark-950 flex items-center justify-center p-4">
-        <div className="w-full max-w-md mx-auto">
-          <div className="text-center mb-8">
-            <button
-              onClick={handleBackToLanding}
-              className="text-bolt-dark-400 hover:text-bolt-accent-blue transition-colors duration-200 mb-4"
-            >
-              ← Back to Home
-            </button>
-            <CyaphireLogo size="lg" />
-          </div>
-
-          <SignupForm onSignupSuccess={handleSignupSuccess} />
-
-          <div className="text-center mt-6">
-            <button
-              onClick={() => setCurrentStep('login')}
-              className="text-bolt-dark-400 hover:text-bolt-accent-blue transition-colors duration-200"
-            >
-              Already have an account? <span className="font-semibold text-bolt-accent-blue">Sign in</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (currentStep === 'otp') {
-    return (
-      <div className="min-h-screen bg-bolt-dark-950 flex items-center justify-center p-4">
-        <div className="w-full max-w-md mx-auto">
-          <OTPForm
-            email={signupEmail}
-            onVerifySuccess={handleOTPSuccess}
-            onBack={() => setCurrentStep('signup')}
-          />
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-black text-white overflow-y-auto overflow-x-hidden relative" style={{ background: 'var(--qp-bg-main)' }}>
