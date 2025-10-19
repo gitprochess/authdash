@@ -65,22 +65,25 @@ export const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen h-screen flex flex-col bg-bolt-dark-950 overflow-hidden">
+    <div className="min-h-screen h-screen flex flex-col overflow-hidden" style={{ background: 'var(--qp-bg-main)' }}>
       <Header />
 
       <div className="flex-1 flex overflow-hidden">
-        {/* Sidebar - Responsive with collapse */}
-        <aside className={`border-r border-white/10 bg-black/20 backdrop-blur-sm flex flex-col transition-all duration-300 ease-in-out ${
+        {/* Sidebar - Blended Quantum Theme */}
+        <aside className={`border-r flex flex-col transition-all duration-300 ease-in-out ${
           sidebarCollapsed ? 'w-16' : 'w-64'
-        } lg:relative absolute lg:translate-x-0 ${sidebarCollapsed ? '-translate-x-full lg:translate-x-0' : 'translate-x-0'} z-30 h-full`}>
+        } lg:relative absolute lg:translate-x-0 ${sidebarCollapsed ? '-translate-x-full lg:translate-x-0' : 'translate-x-0'} z-30 h-full`} style={{ borderColor: 'var(--qp-border)', background: 'rgba(26, 27, 36, 0.4)', backdropFilter: 'blur(12px)' }}>
           {/* Sidebar Toggle Button */}
-          <div className="p-3 border-b border-white/10 flex items-center justify-between">
+          <div className="p-3 border-b flex items-center justify-between" style={{ borderColor: 'var(--qp-border)' }}>
             {!sidebarCollapsed && (
-              <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Navigation</span>
+              <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--qp-text-secondary)' }}>Navigation</span>
             )}
             <button
               onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-200"
+              className="p-2 rounded-lg transition-all duration-200"
+              style={{ color: 'var(--qp-text-secondary)' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--qp-primary)'; e.currentTarget.style.background = 'rgba(108, 99, 255, 0.1)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--qp-text-secondary)'; e.currentTarget.style.background = 'transparent'; }}
               title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
             >
               <Menu className="w-4 h-4" />
@@ -95,28 +98,30 @@ export const Dashboard: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center' : 'space-x-3'} px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative ${
-                    isActive
-                      ? 'bg-gradient-to-r from-purple-600/20 to-blue-600/20 text-white border border-purple-500/30 shadow-lg shadow-purple-900/20'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5 border border-transparent'
-                  }`}
+                  className={`w-full flex items-center ${sidebarCollapsed ? 'justify-center' : 'space-x-3'} px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 group relative border`}
+                  style={{
+                    background: isActive ? 'var(--gradient-ai)' : 'transparent',
+                    color: isActive ? 'var(--qp-text-primary)' : 'var(--qp-text-secondary)',
+                    borderColor: isActive ? 'var(--qp-border-hover)' : 'transparent',
+                    boxShadow: isActive ? 'var(--qp-shadow-glow)' : 'none'
+                  }}
+                  onMouseEnter={(e) => { if (!isActive) { e.currentTarget.style.color = 'var(--qp-text-primary)'; e.currentTarget.style.background = 'rgba(108, 99, 255, 0.05)'; } }}
+                  onMouseLeave={(e) => { if (!isActive) { e.currentTarget.style.color = 'var(--qp-text-secondary)'; e.currentTarget.style.background = 'transparent'; } }}
                   title={sidebarCollapsed ? tab.label : ''}
                 >
-                  <div className={`flex items-center justify-center w-5 h-5 ${
-                    isActive ? 'text-purple-400' : 'text-gray-500 group-hover:text-gray-300'
-                  }`}>
+                  <div className="flex items-center justify-center w-5 h-5" style={{ color: isActive ? 'var(--qp-primary)' : 'inherit' }}>
                     <Icon className="w-5 h-5" />
                   </div>
                   {!sidebarCollapsed && (
                     <>
                       <span className="flex-1 text-left">{tab.label}</span>
                       {tab.id === 'help' && (
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                        <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--qp-secondary)' }}></span>
                       )}
                     </>
                   )}
                   {isActive && (
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-purple-500 to-blue-500 rounded-r-full"></div>
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 rounded-r-full" style={{ background: 'var(--gradient-button)' }}></div>
                   )}
                 </button>
               );
@@ -125,10 +130,10 @@ export const Dashboard: React.FC = () => {
 
           {/* Sidebar Footer */}
           {!sidebarCollapsed && (
-            <div className="p-3 border-t border-white/10 text-xs text-gray-500">
+            <div className="p-3 border-t text-xs" style={{ borderColor: 'var(--qp-border)', color: 'var(--qp-text-secondary)' }}>
               <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span>System Online</span>
+                <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--qp-secondary)' }}></div>
+                <span>Quantum Core Active</span>
               </div>
             </div>
           )}

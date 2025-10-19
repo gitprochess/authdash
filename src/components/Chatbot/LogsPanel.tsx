@@ -285,22 +285,23 @@ export const LogsPanel: React.FC = () => {
   }, [logs, getLogLevelStyle, formatTimestamp, copyLogToClipboard, copiedLogId]);
 
   const LogsContainer = ({ className = "" }: { className?: string }) => (
-    <div className={`flex flex-col h-full min-h-0 bg-gradient-to-br from-black/60 to-purple-900/10 rounded-xl border border-white/10 shadow-2xl overflow-hidden transition-all duration-300 ${className} ${isCollapsed ? 'w-12' : ''}`}>
+    <div className={`flex flex-col h-full min-h-0 rounded-2xl overflow-hidden transition-all duration-300 ${className} ${isCollapsed ? 'w-12' : ''}`} style={{ background: 'var(--qp-bg-panel)', border: '1px solid var(--qp-border)', boxShadow: 'var(--qp-shadow-glow)' }}>
       {/* Header */}
-      <div className="flex-shrink-0 px-4 py-3 border-b border-white/10 bg-black/30 backdrop-blur-sm">
+      <div className="flex-shrink-0 px-4 py-3 border-b backdrop-blur-sm" style={{ borderColor: 'var(--qp-border)', background: 'rgba(26, 27, 36, 0.5)' }}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-600 to-emerald-600 flex items-center justify-center shadow-lg flex-shrink-0">
-              <Terminal className="w-4 h-4 text-white" />
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center shadow-lg flex-shrink-0" style={{ background: 'var(--gradient-ai)' }}>
+              <Terminal className="w-4 h-4" style={{ color: 'var(--qp-secondary)' }} />
             </div>
             {!isCollapsed && (
               <>
-                <h3 className="text-sm font-semibold text-white">Runtime Logs</h3>
+                <h3 className="text-sm font-semibold" style={{ color: 'var(--qp-text-primary)' }}>Runtime Logs</h3>
             
             {/* Status indicator */}
-            <div className={`flex items-center space-x-1 px-1.5 py-0.5 rounded text-xs ${
-              isConnected && !isPaused ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'
-            }`}>
+            <div className="flex items-center space-x-1 px-1.5 py-0.5 rounded text-xs" style={{
+              background: isConnected && !isPaused ? 'rgba(0, 255, 255, 0.1)' : 'rgba(239, 68, 68, 0.1)',
+              color: isConnected && !isPaused ? 'var(--qp-secondary)' : '#ef4444'
+            }}>
               <div className={`w-1 h-1 rounded-full ${
                 isConnected && !isPaused ? 'bg-green-400 animate-pulse' : 'bg-red-400'
               }`}></div>

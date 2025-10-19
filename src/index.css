@@ -2,11 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Animated gradient background with cyberpunk vibes */
+/* Quantum Pulse Background */
 body {
-  background: linear-gradient(135deg, #0a0a0f 0%, #141420 15%, #0f0615 30%, #0a0a0f 50%, #141420 70%, #0f0615 85%, #0a0a0f 100%);
-  background-size: 400% 400%;
-  animation: gradientBackground 20s ease infinite;
+  background: #0E0E12;
   position: relative;
 }
 
@@ -18,66 +16,56 @@ body::before {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
-  animation: pulseGlow 8s ease-in-out infinite;
+    radial-gradient(circle at 50% 50%, rgba(108, 99, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(108, 99, 255, 0.06) 0%, transparent 50%);
+  animation: quantumPulse 12s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
 }
 
-@keyframes gradientBackground {
+@keyframes quantumPulse {
   0%, 100% {
-    background-position: 0% 50%;
-  }
-  33% {
-    background-position: 100% 25%;
-  }
-  66% {
-    background-position: 0% 75%;
-  }
-}
-
-@keyframes pulseGlow {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scale(1);
+    opacity: 0.4;
+    transform: scale(1) rotate(0deg);
   }
   50% {
-    opacity: 1;
-    transform: scale(1.1);
+    opacity: 0.8;
+    transform: scale(1.05) rotate(1deg);
   }
 }
 
-/* CSS Variables for cyberpunk dark mode theming with vibrant accents */
+/* Quantum Pulse Color Palette */
 :root {
-  --color-bg-primary: #0a0a0f;
-  --color-bg-secondary: #141420;
-  --color-bg-tertiary: #1a1a2e;
-  --color-bg-hover: #22223a;
-  --color-primary: #3b82f6;
-  --color-secondary: #8b5cf6;
-  --color-accent: #06b6d4;
-  --color-purple: #7c3aed;
-  --color-purple-dark: #5b21b6;
-  --color-cyan-bright: #00d4ff;
-  --color-purple-bright: #a855f7;
-  --color-blue-bright: #60a5fa;
-  --color-text: #e6e7e9;
-  --color-text-secondary: #85868e;
-  --color-text-muted: #5a5b62;
-  --color-border: rgba(124, 58, 237, 0.2);
-  --color-border-hover: rgba(124, 58, 237, 0.4);
+  --qp-bg-main: #0E0E12;
+  --qp-bg-panel: #1A1B24;
+  --qp-primary: #6C63FF;
+  --qp-secondary: #00FFFF;
+  --qp-text-primary: #E1E1E1;
+  --qp-text-secondary: #999999;
+  --qp-border: rgba(108, 99, 255, 0.15);
+  --qp-border-hover: rgba(108, 99, 255, 0.3);
+  --qp-glow-primary: rgba(108, 99, 255, 0.3);
+  --qp-glow-secondary: rgba(0, 255, 255, 0.3);
+  --gradient-ai: linear-gradient(135deg, rgba(108, 99, 255, 0.2), rgba(108, 99, 255, 0.05));
+  --gradient-button: linear-gradient(135deg, #6C63FF, #00FFFF);
+  --qp-shadow-glow: 0 0 20px rgba(108, 99, 255, 0.2);
+  --qp-shadow-glow-strong: 0 0 40px rgba(108, 99, 255, 0.4);
+  --qp-shadow-cyan: 0 0 20px rgba(0, 255, 255, 0.2);
+  --animation-duration: 0.3s;
+  --color-bg-primary: var(--qp-bg-main);
+  --color-bg-secondary: var(--qp-bg-panel);
+  --color-bg-tertiary: var(--qp-bg-panel);
+  --color-primary: var(--qp-primary);
+  --color-text: var(--qp-text-primary);
+  --color-text-secondary: var(--qp-text-secondary);
+  --color-border: var(--qp-border);
+  --color-border-hover: var(--qp-border-hover);
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
-  --gradient-main: linear-gradient(135deg, #0a0a0f 0%, #141420 100%);
-  --gradient-button: linear-gradient(135deg, #7c3aed 0%, #3b82f6 50%, #06b6d4 100%);
-  --gradient-purple: linear-gradient(135deg, #a855f7, #7c3aed, #3b82f6, #06b6d4);
-  --gradient-border: linear-gradient(90deg, #7c3aed, #3b82f6, #06b6d4, #10b981, #06b6d4, #3b82f6, #7c3aed);
-  --gradient-card: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(59, 130, 246, 0.03), transparent);
-  --gradient-glow: radial-gradient(circle at center, rgba(124, 58, 237, 0.4), transparent);
-  --animation-duration: 0.2s;
+  --gradient-border: linear-gradient(90deg, #6C63FF, #00FFFF, #6C63FF);
+  --gradient-glow: radial-gradient(circle at center, var(--qp-glow-primary), transparent);
 }
 
 /* Cyberpunk card effects with animated borders and glows */
@@ -631,6 +619,48 @@ button:active {
 /* Custom smooth scrolling */
 * {
   scroll-behavior: smooth;
+}
+
+/* Typing pulse animation for AI */
+@keyframes typingPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+.typing-pulse {
+  animation: typingPulse 1.5s ease-in-out infinite;
+}
+
+/* AI Message Glow */
+@keyframes aiGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px var(--qp-glow-primary), 0 0 20px transparent;
+  }
+  50% {
+    box-shadow: 0 0 20px var(--qp-glow-primary), 0 0 40px var(--qp-glow-primary);
+  }
+}
+
+.ai-message-glow {
+  animation: aiGlow 3s ease-in-out infinite;
+}
+
+/* Cyan text glow on hover */
+.cyan-glow-hover:hover {
+  text-shadow: 0 0 10px var(--qp-secondary), 0 0 20px var(--qp-secondary);
+  transition: text-shadow 0.3s ease;
+}
+
+/* Chat centerpiece glow */
+.chat-centerpiece {
+  box-shadow: var(--qp-shadow-glow-strong);
+  border: 1px solid var(--qp-border-hover);
 }
 
 /* Enhanced glass effects for full view */

@@ -7,22 +7,23 @@ export const Header: React.FC = () => {
   const { user, logout, currentSSHHost } = useAuth();
 
   return (
-    <header className="border-b border-white/10 bg-black/30 backdrop-blur-md relative z-20 shadow-lg flex-shrink-0">
+    <header className="border-b backdrop-blur-md relative z-20 shadow-lg flex-shrink-0" style={{ borderColor: 'var(--qp-border)', background: 'rgba(26, 27, 36, 0.5)' }}>
       <div className="px-6 flex justify-between items-center h-14">
         <div className="flex items-center">
           <CyaphireLogo size="sm" />
         </div>
 
         <div className="flex items-center space-x-3">
-          {/* SSH Status */}
-          <div className={`flex items-center space-x-2 text-xs px-3 py-1.5 rounded-lg border transition-all duration-200 ${
-            currentSSHHost
-              ? 'bg-green-500/10 border-green-500/30 text-green-300'
-              : 'bg-yellow-500/10 border-yellow-500/30 text-yellow-300'
-          }`}>
+          {/* SSH Status - Quantum Theme */}
+          <div className={`flex items-center space-x-2 text-xs px-3 py-1.5 rounded-lg border transition-all duration-200`}
+            style={{
+              background: currentSSHHost ? 'rgba(0, 255, 255, 0.05)' : 'rgba(245, 158, 11, 0.05)',
+              borderColor: currentSSHHost ? 'var(--qp-secondary)' : '#f59e0b',
+              color: currentSSHHost ? 'var(--qp-secondary)' : '#fbbf24'
+            }}>
             {currentSSHHost ? (
               <>
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--qp-secondary)' }}></div>
                 <Server className="w-3.5 h-3.5" />
                 <span className="hidden md:block font-mono text-xs">{currentSSHHost}</span>
               </>
@@ -35,25 +36,28 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Auth Status */}
-          <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-purple-500/10 border border-purple-500/30">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-xs text-gray-300">Auth</span>
+          <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg border" style={{ background: 'rgba(108, 99, 255, 0.05)', borderColor: 'var(--qp-border)' }}>
+            <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--qp-secondary)' }}></div>
+            <span className="text-xs" style={{ color: 'var(--qp-text-primary)' }}>Auth</span>
           </div>
 
           {/* User Info */}
-          <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-purple-600 to-blue-600 flex items-center justify-center">
-              <User className="w-4 h-4 text-white" />
+          <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg border" style={{ background: 'rgba(26, 27, 36, 0.6)', borderColor: 'var(--qp-border)' }}>
+            <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'var(--gradient-ai)' }}>
+              <User className="w-4 h-4" style={{ color: 'var(--qp-primary)' }} />
             </div>
-            <span className="hidden sm:block text-sm font-medium text-white">{user?.name}</span>
+            <span className="hidden sm:block text-sm font-medium" style={{ color: 'var(--qp-text-primary)' }}>{user?.name}</span>
           </div>
 
           {/* Logout */}
           <button
             onClick={logout}
-            className="flex items-center space-x-2 px-3 py-1.5 text-gray-400 hover:text-white bg-white/5 hover:bg-red-500/10 border border-white/10 hover:border-red-500/30 rounded-lg transition-all duration-200 group"
+            className="flex items-center space-x-2 px-3 py-1.5 border rounded-lg transition-all duration-200 group"
+            style={{ color: 'var(--qp-text-secondary)', background: 'rgba(26, 27, 36, 0.4)', borderColor: 'var(--qp-border)' }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#ef4444'; e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--qp-border)'; e.currentTarget.style.background = 'rgba(26, 27, 36, 0.4)'; }}
           >
-            <LogOut className="w-4 h-4 group-hover:text-red-400" />
+            <LogOut className="w-4 h-4" />
             <span className="hidden sm:block text-sm">Logout</span>
           </button>
         </div>
