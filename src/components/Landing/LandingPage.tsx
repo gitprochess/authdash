@@ -101,12 +101,23 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onAuthSuccess }) => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
-      {/* Gradient Overlay */}
+    <div className="min-h-screen bg-black text-white overflow-x-hidden relative">
+      {/* Grid Background */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-transparent to-blue-900/10"></div>
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-[120px] animate-pulse delay-1000"></div>
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(rgba(124, 58, 237, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(124, 58, 237, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '80px 80px',
+          maskImage: 'radial-gradient(ellipse 80% 50% at 50% 50%, black 40%, transparent 100%)'
+        }}></div>
+      </div>
+
+      {/* Gradient Overlays */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-gradient-radial from-purple-600/30 via-blue-600/20 to-transparent rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-10">
@@ -134,86 +145,94 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onAuthSuccess }) => {
         </header>
 
         {/* Hero Section */}
-        <section className="px-6 py-24 md:py-32">
-          <div className="max-w-7xl mx-auto">
+        <section className="px-6 py-16 md:py-24 min-h-[90vh] flex items-center justify-center">
+          <div className="max-w-7xl mx-auto w-full">
             <div className="text-center max-w-4xl mx-auto">
-              {/* Badge */}
-              <div className="inline-flex items-center px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 backdrop-blur-sm mb-8 group hover:border-purple-500/50 transition-all duration-300">
-                <Sparkles className="w-4 h-4 mr-2 text-purple-400" />
-                <span className="text-sm font-medium text-purple-300">AI-Powered Deployment Platform</span>
-              </div>
-
               {/* Main Heading */}
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
-                <span className="bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
-                  Deploy Applications
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1] tracking-tight">
+                <span className="text-white">
+                  Build and deploy on the
                 </span>
                 <br />
-                <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                  Through Conversations
+                <span className="bg-gradient-to-r from-white via-white to-gray-400 bg-clip-text text-transparent">
+                  AI Cloud.
                 </span>
               </h1>
 
               {/* Subheading */}
-              <p className="text-xl md:text-2xl text-bolt-dark-200 mb-12 leading-relaxed max-w-3xl mx-auto">
-                Skip weeks of DevOps setup. Deploy full-stack applications with databases in under 3 minutes using natural language.
+              <p className="text-lg md:text-xl text-gray-400 mb-12 leading-relaxed max-w-2xl mx-auto">
+                Cyaphire provides the developer tools and cloud infrastructure<br className="hidden md:block" />
+                to build, scale, and secure a faster, more personalized web.
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-24">
                 <button
                   onClick={() => setCurrentStep('signup')}
-                  className="group px-8 py-4 futuristic-btn text-white rounded-lg text-lg font-semibold flex items-center space-x-3 shadow-2xl shadow-purple-900/50 hover:shadow-purple-700/50"
+                  className="group px-6 py-3 bg-white text-black rounded-lg text-base font-medium flex items-center space-x-2 hover:bg-gray-100 transition-all duration-200"
                 >
-                  <span>Start Deploying Free</span>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <span className="flex items-center space-x-2">
+                    <span className="text-lg">▲</span>
+                    <span>Start Deploying</span>
+                  </span>
                 </button>
-                <button className="px-8 py-4 border border-white/20 text-white rounded-lg text-lg font-medium hover:bg-white/5 transition-all duration-200 backdrop-blur-sm">
-                  Watch Demo
+                <button className="px-6 py-3 bg-gray-900 border border-gray-800 text-white rounded-lg text-base font-medium hover:bg-gray-800 hover:border-gray-700 transition-all duration-200">
+                  Get a Demo
                 </button>
               </div>
 
-              {/* Tech Stack Pills */}
-              <div className="flex flex-wrap items-center justify-center gap-3 text-sm">
-                <span className="text-bolt-dark-400">Supports:</span>
-                {['React', 'Node.js', 'Python', 'Docker', 'PostgreSQL', 'MongoDB'].map((tech) => (
-                  <span key={tech} className="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-bolt-dark-300 backdrop-blur-sm">
-                    {tech}
-                  </span>
-                ))}
+              {/* 3D Pyramid Visual */}
+              <div className="relative h-[400px] md:h-[500px] flex items-center justify-center">
+                {/* Gradient Background Effect */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-full h-full max-w-[800px] bg-gradient-to-r from-cyan-500/20 via-transparent to-orange-500/20 blur-3xl"></div>
+                </div>
+
+                {/* Pyramid Shape */}
+                <div className="relative w-64 h-64 md:w-80 md:h-80" style={{
+                  transform: 'perspective(1000px) rotateX(5deg)',
+                  animation: 'float 6s ease-in-out infinite'
+                }}>
+                  {/* Front Face */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="relative" style={{
+                      width: 0,
+                      height: 0,
+                      borderLeft: '160px solid transparent',
+                      borderRight: '160px solid transparent',
+                      borderBottom: '280px solid rgba(15, 15, 15, 0.8)',
+                      filter: 'drop-shadow(0 0 40px rgba(124, 58, 237, 0.3))'
+                    }}>
+                      {/* Layered Lines */}
+                      {Array.from({ length: 20 }).map((_, i) => (
+                        <div
+                          key={i}
+                          className="absolute left-1/2 -translate-x-1/2"
+                          style={{
+                            bottom: `${i * 14}px`,
+                            width: `${300 - i * 15}px`,
+                            height: '1px',
+                            background: `linear-gradient(90deg, transparent, rgba(124, 58, 237, ${0.3 - i * 0.015}), transparent)`
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Stats Bar */}
-        <section className="px-6 py-12 border-y border-white/10 bg-white/[0.02] backdrop-blur-xl">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-              <div>
-                <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                  &lt;3min
-                </div>
-                <div className="text-sm text-bolt-dark-400 font-medium">Deploy Time</div>
-              </div>
-              <div>
-                <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                  99.9%
-                </div>
-                <div className="text-sm text-bolt-dark-400 font-medium">Uptime SLA</div>
-              </div>
-              <div>
-                <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  10K+
-                </div>
-                <div className="text-sm text-bolt-dark-400 font-medium">Apps Deployed</div>
-              </div>
-              <div>
-                <div className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
-                  24/7
-                </div>
-                <div className="text-sm text-bolt-dark-400 font-medium">AI Support</div>
-              </div>
+        {/* Trusted By Section */}
+        <section className="px-6 py-16 border-t border-white/5">
+          <div className="max-w-7xl mx-auto text-center">
+            <h3 className="text-sm text-gray-500 font-medium mb-12">Trusted by application developers</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 items-center justify-items-center opacity-50">
+              <div className="text-2xl font-bold text-gray-600">React</div>
+              <div className="text-2xl font-bold text-gray-600">Node.js</div>
+              <div className="text-2xl font-bold text-gray-600">Docker</div>
+              <div className="text-2xl font-bold text-gray-600">PostgreSQL</div>
             </div>
           </div>
         </section>

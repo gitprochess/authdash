@@ -457,6 +457,21 @@ input[type="text"]:focus {
   perspective: 1000px;
 }
 
+/* Floating animation for 3D elements */
+@keyframes float {
+  0%, 100% {
+    transform: perspective(1000px) rotateX(5deg) translateY(0px);
+  }
+  50% {
+    transform: perspective(1000px) rotateX(5deg) translateY(-20px);
+  }
+}
+
+/* Radial gradient utility */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
 /* Enhanced glass effects for full view */
 .backdrop-blur-3xl {
   backdrop-filter: blur(40px);
