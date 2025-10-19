@@ -19,13 +19,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onAuthSuccess }) => {
 
   if (currentStep === 'login') {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'var(--qp-bg-main)' }}>
+      <div className="min-h-screen flex items-center justify-center p-4 relative" style={{ background: 'var(--qp-bg-main)' }}>
         <FlyingIcons />
-        <div className="w-full max-w-md mx-auto">
+        <div className="w-full max-w-md mx-auto relative z-20">
           <div className="text-center mb-8">
             <button
               onClick={handleBackToLanding}
-              className="text-bolt-dark-400 hover:text-bolt-accent-blue transition-colors duration-200 mb-4"
+              className="text-bolt-dark-400 hover:text-bolt-accent-blue transition-colors duration-200 mb-4 relative z-20"
             >
               ← Back to Home
             </button>

@@ -110,8 +110,8 @@ export const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <div className="glass rounded-2xl p-8 vision-glow">
+    <div className="w-full max-w-md mx-auto relative z-10">
+      <div className="glass rounded-2xl p-8 vision-glow relative">
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-bolt-dark-50 mb-2">
             Welcome Back
@@ -123,7 +123,7 @@ export const LoginForm: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="relative group">
-            <Mail className="absolute left-3 top-3 h-5 w-5 text-bolt-dark-400 group-focus-within:text-purple-400 transition-colors duration-200 z-10" />
+            <Mail className="absolute left-3 top-3 h-5 w-5 text-bolt-dark-400 group-focus-within:text-purple-400 transition-colors duration-200 pointer-events-none" />
             <input
               type="email"
               name="email"
@@ -131,12 +131,12 @@ export const LoginForm: React.FC = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full pl-12 pr-4 py-3 bg-bolt-dark-900 border border-bolt-dark-700 rounded-lg text-bolt-dark-50 placeholder-bolt-dark-400 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/30 focus:shadow-lg focus:shadow-purple-900/20 transition-all duration-200"
+              className="w-full pl-12 pr-4 py-3 bg-bolt-dark-900 border border-bolt-dark-700 rounded-lg text-bolt-dark-50 placeholder-bolt-dark-400 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/30 focus:shadow-lg focus:shadow-purple-900/20 transition-all duration-200 relative z-10"
             />
           </div>
 
           <div className="relative group">
-            <Lock className="absolute left-3 top-3 h-5 w-5 text-bolt-dark-400 group-focus-within:text-purple-400 transition-colors duration-200 z-10" />
+            <Lock className="absolute left-3 top-3 h-5 w-5 text-bolt-dark-400 group-focus-within:text-purple-400 transition-colors duration-200 pointer-events-none" />
             <input
               type="password"
               name="password"
@@ -144,7 +144,7 @@ export const LoginForm: React.FC = () => {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full pl-12 pr-4 py-3 bg-bolt-dark-900 border border-bolt-dark-700 rounded-lg text-bolt-dark-50 placeholder-bolt-dark-400 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/30 focus:shadow-lg focus:shadow-purple-900/20 transition-all duration-200"
+              className="w-full pl-12 pr-4 py-3 bg-bolt-dark-900 border border-bolt-dark-700 rounded-lg text-bolt-dark-50 placeholder-bolt-dark-400 focus:outline-none focus:border-purple-600 focus:ring-2 focus:ring-purple-600/30 focus:shadow-lg focus:shadow-purple-900/20 transition-all duration-200 relative z-10"
             />
           </div>
 
