@@ -12,15 +12,15 @@ import { useTheme } from '../../contexts/ThemeContext';
 type TabType = 'containers' | 'databases' | 'ssh' | 'chat' | 'help' | 'profile' | 'settings';
 
 export const Dashboard: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<TabType>('containers');
+  const [activeTab, setActiveTab] = useState<TabType>('chat');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { theme, settings } = useTheme();
 
   const tabs = [
+    { id: 'chat' as TabType, label: 'Cyaphire AI X', icon: MessageSquare },
     { id: 'containers' as TabType, label: 'Containers', icon: Container },
     { id: 'databases' as TabType, label: 'Databases', icon: Database },
     { id: 'ssh' as TabType, label: 'SSH Servers', icon: Server },
-    { id: 'chat' as TabType, label: 'Cyaphire AI X', icon: MessageSquare },
     { id: 'help' as TabType, label: 'Help', icon: HelpCircle },
     { id: 'profile' as TabType, label: 'Profile', icon: User },
     { id: 'settings' as TabType, label: 'Settings', icon: Settings },

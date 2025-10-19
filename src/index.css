@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Quantum Pulse Background */
+/* Spider-Man Background */
 body {
-  background: #0E0E12;
+  background: #0A0A0E;
   position: relative;
 }
 
@@ -16,9 +16,9 @@ body::before {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(circle at 50% 50%, rgba(108, 99, 255, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 20% 80%, rgba(108, 99, 255, 0.06) 0%, transparent 50%);
+    radial-gradient(circle at 50% 50%, rgba(230, 57, 70, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(69, 123, 157, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(230, 57, 70, 0.05) 0%, transparent 50%);
   animation: quantumPulse 12s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
@@ -35,23 +35,24 @@ body::before {
   }
 }
 
-/* Quantum Pulse Color Palette */
+/* Spider-Man Quantum Theme */
 :root {
-  --qp-bg-main: #0E0E12;
+  --qp-bg-main: #0A0A0E;
   --qp-bg-panel: #1A1B24;
-  --qp-primary: #6C63FF;
-  --qp-secondary: #00FFFF;
-  --qp-text-primary: #E1E1E1;
-  --qp-text-secondary: #999999;
-  --qp-border: rgba(108, 99, 255, 0.15);
-  --qp-border-hover: rgba(108, 99, 255, 0.3);
-  --qp-glow-primary: rgba(108, 99, 255, 0.3);
-  --qp-glow-secondary: rgba(0, 255, 255, 0.3);
-  --gradient-ai: linear-gradient(135deg, rgba(108, 99, 255, 0.2), rgba(108, 99, 255, 0.05));
-  --gradient-button: linear-gradient(135deg, #6C63FF, #00FFFF);
-  --qp-shadow-glow: 0 0 20px rgba(108, 99, 255, 0.2);
-  --qp-shadow-glow-strong: 0 0 40px rgba(108, 99, 255, 0.4);
-  --qp-shadow-cyan: 0 0 20px rgba(0, 255, 255, 0.2);
+  --qp-primary: #E63946;
+  --qp-secondary: #457B9D;
+  --qp-accent: #F1FAEE;
+  --qp-text-primary: #F1FAEE;
+  --qp-text-secondary: #A8DADC;
+  --qp-border: rgba(230, 57, 70, 0.15);
+  --qp-border-hover: rgba(230, 57, 70, 0.3);
+  --qp-glow-primary: rgba(230, 57, 70, 0.15);
+  --qp-glow-secondary: rgba(69, 123, 157, 0.15);
+  --gradient-ai: linear-gradient(135deg, rgba(230, 57, 70, 0.12), rgba(69, 123, 157, 0.08));
+  --gradient-button: linear-gradient(135deg, #E63946, #457B9D);
+  --qp-shadow-glow: 0 0 15px rgba(230, 57, 70, 0.15);
+  --qp-shadow-glow-strong: 0 0 25px rgba(230, 57, 70, 0.2);
+  --qp-shadow-cyan: 0 0 15px rgba(69, 123, 157, 0.15);
   --animation-duration: 0.3s;
   --color-bg-primary: var(--qp-bg-main);
   --color-bg-secondary: var(--qp-bg-panel);
@@ -64,7 +65,7 @@ body::before {
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-error: #ef4444;
-  --gradient-border: linear-gradient(90deg, #6C63FF, #00FFFF, #6C63FF);
+  --gradient-border: linear-gradient(90deg, #E63946, #457B9D, #E63946);
   --gradient-glow: radial-gradient(circle at center, var(--qp-glow-primary), transparent);
 }
 
@@ -607,13 +608,13 @@ button:active {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(124, 58, 237, 0.3);
+  background: rgba(230, 57, 70, 0.3);
   border-radius: 4px;
   transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(124, 58, 237, 0.5);
+  background: rgba(230, 57, 70, 0.5);
 }
 
 /* Custom smooth scrolling */
@@ -637,18 +638,18 @@ button:active {
   animation: typingPulse 1.5s ease-in-out infinite;
 }
 
-/* AI Message Glow */
+/* AI Message Glow - Reduced */
 @keyframes aiGlow {
   0%, 100% {
-    box-shadow: 0 0 10px var(--qp-glow-primary), 0 0 20px transparent;
+    box-shadow: 0 0 8px var(--qp-glow-primary), 0 0 12px transparent;
   }
   50% {
-    box-shadow: 0 0 20px var(--qp-glow-primary), 0 0 40px var(--qp-glow-primary);
+    box-shadow: 0 0 12px var(--qp-glow-primary), 0 0 18px var(--qp-glow-primary);
   }
 }
 
 .ai-message-glow {
-  animation: aiGlow 3s ease-in-out infinite;
+  animation: aiGlow 4s ease-in-out infinite;
 }
 
 /* Cyan text glow on hover */
@@ -657,10 +658,10 @@ button:active {
   transition: text-shadow 0.3s ease;
 }
 
-/* Chat centerpiece glow */
+/* Chat centerpiece glow - Reduced */
 .chat-centerpiece {
-  box-shadow: var(--qp-shadow-glow-strong);
-  border: 1px solid var(--qp-border-hover);
+  box-shadow: var(--qp-shadow-glow);
+  border: 1px solid var(--qp-border);
 }
 
 /* Enhanced glass effects for full view */
