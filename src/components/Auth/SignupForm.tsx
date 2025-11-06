@@ -6,9 +6,10 @@ import { CyaphireLogo } from '../UI/CyaphireLogo';
 
 interface SignupFormProps {
   onSignupSuccess: (email: string) => void;
+  onSwitchToLogin?: () => void;
 }
 
-export const SignupForm: React.FC<SignupFormProps> = ({ onSignupSuccess }) => {
+export const SignupForm: React.FC<SignupFormProps> = ({ onSignupSuccess, onSwitchToLogin }) => {
   const [formData, setFormData] = useState<SignupData>({
     name: '',
     email: '',
@@ -134,6 +135,20 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onSignupSuccess }) => {
             )}
           </button>
         </form>
+
+        {onSwitchToLogin && (
+          <div className="mt-6 text-center">
+            <p className="text-gray-400 text-sm">
+              Already have an account?{' '}
+              <button
+                onClick={onSwitchToLogin}
+                className="text-purple-400 hover:text-purple-300 font-semibold transition-colors"
+              >
+                Sign in
+              </button>
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

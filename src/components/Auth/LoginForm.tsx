@@ -5,7 +5,11 @@ import { authApi } from '../../services/api';
 import { useAuth } from '../../contexts/AuthContext';
 import { CyaphireLogo } from '../UI/CyaphireLogo';
 
-export const LoginForm: React.FC = () => {
+interface LoginFormProps {
+  onSwitchToSignup?: () => void;
+}
+
+export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup }) => {
   const { login } = useAuth();
   const [formData, setFormData] = useState<LoginData>({
     email: '',
@@ -166,6 +170,20 @@ export const LoginForm: React.FC = () => {
             )}
           </button>
         </form>
+
+        {onSwitchToSignup && (
+          <div className="mt-6 text-center">
+            <p className="text-bolt-dark-300 text-sm">
+              Don't have an account?{' '}
+              <button
+                onClick={onSwitchToSignup}
+                className="text-purple-400 hover:text-purple-300 font-semibold transition-colors"
+              >
+                Sign up
+              </button>
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
