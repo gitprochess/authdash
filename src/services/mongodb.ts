@@ -1,4 +1,5 @@
-const MONGODB_API_BASE = 'https://auth.deploidx.com/api';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export interface UserDeploymentInfo {
   email: string;
@@ -9,11 +10,12 @@ export interface UserDeploymentInfo {
 
 export const mongodbService = {
   getUserDeploymentInfo: async (token: string): Promise<UserDeploymentInfo> => {
-    const response = await fetch(`${MONGODB_API_BASE}/user/deployment-info`, {
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/deployment-info`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
       },
     });
 
@@ -26,11 +28,12 @@ export const mongodbService = {
   },
 
   checkDeploymentLimit: async (token: string): Promise<{ allowed: boolean; message: string; limit: number; current: number }> => {
-    const response = await fetch(`${MONGODB_API_BASE}/user/check-deployment-limit`, {
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/check-deployment-limit`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
       },
     });
 
@@ -43,11 +46,12 @@ export const mongodbService = {
   },
 
   incrementDeploymentCount: async (token: string, projectName: string): Promise<void> => {
-    const response = await fetch(`${MONGODB_API_BASE}/user/increment-deployment`, {
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/increment-deployment`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
       },
       body: JSON.stringify({ projectName }),
     });
@@ -59,11 +63,12 @@ export const mongodbService = {
   },
 
   decrementDeploymentCount: async (token: string, projectName: string): Promise<void> => {
-    const response = await fetch(`${MONGODB_API_BASE}/user/decrement-deployment`, {
+    const response = await fetch(`${SUPABASE_URL}/functions/v1/decrement-deployment`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
       },
       body: JSON.stringify({ projectName }),
     });
