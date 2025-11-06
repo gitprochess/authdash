@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Server, MessageSquare, User, Settings, Container, Database, HelpCircle, Menu } from 'lucide-react';
+import { Server, MessageSquare, User, Settings, Container, Database, HelpCircle, Menu, Shield } from 'lucide-react';
 import { Header } from './Header';
 import { SSHManager } from '../SSH/SSHManager';
 import { ChatInterface } from '../Chatbot/ChatInterface';
@@ -7,21 +7,28 @@ import { ContainerManager } from '../Containers/ContainerManager';
 import { DatabaseManager } from '../Database/DatabaseManager';
 import { SettingsPanel } from '../Settings/SettingsPanel';
 import { HelpPanel } from '../Help/HelpPanel';
+import { SuperAdminDashboard } from '../Admin/SuperAdminDashboard';
 import { FlyingIcons } from '../UI/FlyingIcons';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useAuth } from '../../contexts/AuthContext';
 
-type TabType = 'containers' | 'databases' | 'ssh' | 'chat' | 'help' | 'profile' | 'settings';
+type TabType = 'containers' | 'databases' | 'ssh' | 'chat' | 'help' | 'profile' | 'settings' | 'admin';
 
 export const Dashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('chat');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { theme, settings } = useTheme();
+  const { user } = useAuth();
+
+  const ADMIN_EMAILS = ['n4nikhilkana@gmail.com', 'admin@cyaphire.com'];
+  const isAdmin = user?.email && ADMIN_EMAILS.includes(user.email);
 
   const tabs = [
     { id: 'chat' as TabType, label: 'Cyaphire AI X', icon: MessageSquare },
     { id: 'containers' as TabType, label: 'Containers', icon: Container },
     { id: 'databases' as TabType, label: 'Databases', icon: Database },
     { id: 'ssh' as TabType, label: 'SSH Servers', icon: Server },
+    ...(isAdmin ? [{ id: 'admin' as TabType, label: 'Admin Panel', icon: Shield }] : []),
     { id: 'help' as TabType, label: 'Help', icon: HelpCircle },
     { id: 'profile' as TabType, label: 'Profile', icon: User },
     { id: 'settings' as TabType, label: 'Settings', icon: Settings },
@@ -37,6 +44,8 @@ export const Dashboard: React.FC = () => {
         return <SSHManager />;
       case 'chat':
         return <ChatInterface />;
+      case 'admin':
+        return <SuperAdminDashboard />;
       case 'help':
         return <HelpPanel />;
       case 'profile':
