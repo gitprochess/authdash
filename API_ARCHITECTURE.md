@@ -68,14 +68,66 @@ POST /databases/delete     - Delete database
      }
      ```
 
+#### Package Management Functions
+3. **packages-get-all**
+   - **Purpose:** Fetch all packages
+   - **URL:** `/functions/v1/packages-get-all`
+   - **Method:** GET
+   - **Authentication:** JWT Token (Admin only)
+
+4. **packages-create**
+   - **Purpose:** Create a new package
+   - **URL:** `/functions/v1/packages-create`
+   - **Method:** POST
+   - **Authentication:** JWT Token (Admin only)
+   - **Body:**
+     ```json
+     {
+       "name": "string",
+       "deploymentLimit": number,
+       "price": number,
+       "features": ["string"],
+       "isActive": boolean
+     }
+     ```
+
+5. **packages-update**
+   - **Purpose:** Update an existing package
+   - **URL:** `/functions/v1/packages-update`
+   - **Method:** POST
+   - **Authentication:** JWT Token (Admin only)
+   - **Body:**
+     ```json
+     {
+       "packageId": "string",
+       "name": "string",
+       "deploymentLimit": number,
+       "price": number,
+       "features": ["string"],
+       "isActive": boolean
+     }
+     ```
+
+6. **packages-delete**
+   - **Purpose:** Delete a package
+   - **URL:** `/functions/v1/packages-delete`
+   - **Method:** POST
+   - **Authentication:** JWT Token (Admin only)
+   - **Body:**
+     ```json
+     {
+       "packageId": "string"
+     }
+     ```
+
 #### Deployment Limit Functions
-3. **check-deployment-limit**
+7. **check-deployment-limit**
    - **Purpose:** Check if user can create new deployment
    - **URL:** `/functions/v1/check-deployment-limit`
    - **Method:** GET
    - **Authentication:** JWT Token
 
-4. **increment-deployment**
+8. **increment-deployment**
    - **Purpose:** Increment user's active deployment count
    - **URL:** `/functions/v1/increment-deployment`
    - **Method:** POST
@@ -87,7 +139,7 @@ POST /databases/delete     - Delete database
      }
      ```
 
-5. **decrement-deployment**
+9. **decrement-deployment**
    - **Purpose:** Decrement user's active deployment count
    - **URL:** `/functions/v1/decrement-deployment`
    - **Method:** POST
@@ -99,11 +151,11 @@ POST /databases/delete     - Delete database
      }
      ```
 
-6. **deployment-info**
-   - **Purpose:** Get user's deployment information
-   - **URL:** `/functions/v1/deployment-info`
-   - **Method:** GET
-   - **Authentication:** JWT Token
+10. **deployment-info**
+    - **Purpose:** Get user's deployment information
+    - **URL:** `/functions/v1/deployment-info`
+    - **Method:** GET
+    - **Authentication:** JWT Token
 
 ## Service Files
 
@@ -118,6 +170,13 @@ Contains all API calls to the **DeploidX external API**:
 Contains all API calls to the **Supabase Edge Functions** for admin features:
 - `adminService.getAllUsers()` - Fetch all users
 - `adminService.updateUser()` - Update user package/limits
+
+### `/src/services/packages.ts`
+Contains all API calls to the **Supabase Edge Functions** for package management:
+- `packagesService.getAllPackages()` - Fetch all packages
+- `packagesService.createPackage()` - Create new package
+- `packagesService.updatePackage()` - Update existing package
+- `packagesService.deletePackage()` - Delete package
 
 ## Environment Variables Required
 
@@ -150,11 +209,12 @@ These emails have access to:
 
 ## Database
 
-**MongoDB** is used for storing user data:
-- Connection managed by Edge Functions
-- Located at: `34.93.8.67:27017`
+**MongoDB** is used for storing application data:
+- Connection: `mongodb://adminUser:StrongPassw0rd!@localhost:27017/admin`
 - Database: `admin`
-- Collection: `users`
+- Collections:
+  - `users` - User accounts and deployment information
+  - `packages` - Deployment packages with pricing and limits
 
 ## Summary
 

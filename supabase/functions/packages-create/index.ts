@@ -1,5 +1,5 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { MongoClient, ObjectId } from "npm:mongodb@6.3.0";
+import { MongoClient } from "npm:mongodb@6.3.0";
 
 const MONGODB_URI = "mongodb://adminUser:StrongPassw0rd!@localhost:27017/admin";
 const ADMIN_EMAILS = ["n4nikhilkana@gmail.com", "admin@cyaphire.com"];
@@ -10,11 +10,12 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
 };
 
-interface UpdateUserRequest {
-  userId: string;
-  deploymentLimit?: number;
-  activeDeployments?: number;
-  isVerified?: boolean;
+interface CreatePackageRequest {
+  name: string;
+  deploymentLimit: number;
+  price: number;
+  features: string[];
+  isActive?: boolean;
 }
 
 Deno.serve(async (req: Request) => {
@@ -38,7 +39,6 @@ Deno.serve(async (req: Request) => {
     }
 
     const token = authHeader.replace("Bearer ", "");
-
     const payload = atob(token.split('.')[1]);
     const tokenData = JSON.parse(payload);
     const userEmail = tokenData.email;
@@ -53,11 +53,11 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    const requestData: UpdateUserRequest = await req.json();
+    const requestData: CreatePackageRequest = await req.json();
 
-    if (!requestData.userId) {
+    if (!requestData.name || !requestData.deploymentLimit || requestData.price === undefined) {
       return new Response(
-        JSON.stringify({ error: "User ID is required" }),
+        JSON.stringify({ error: "Name, deploymentLimit, and price are required" }),
         {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -70,25 +70,15 @@ Deno.serve(async (req: Request) => {
     try {
       await client.connect();
       const db = client.db("admin");
-      const usersCollection = db.collection("users");
+      const packagesCollection = db.collection("packages");
 
-      const updateFields: Record<string, unknown> = {};
+      const existingPackage = await packagesCollection.findOne({
+        name: requestData.name,
+      });
 
-      if (requestData.deploymentLimit !== undefined) {
-        updateFields.deploymentLimit = requestData.deploymentLimit;
-      }
-
-      if (requestData.activeDeployments !== undefined) {
-        updateFields.activeDeployments = requestData.activeDeployments;
-      }
-
-      if (requestData.isVerified !== undefined) {
-        updateFields.isVerified = requestData.isVerified;
-      }
-
-      if (Object.keys(updateFields).length === 0) {
+      if (existingPackage) {
         return new Response(
-          JSON.stringify({ error: "No fields to update" }),
+          JSON.stringify({ error: "Package with this name already exists" }),
           {
             status: 400,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -96,49 +86,38 @@ Deno.serve(async (req: Request) => {
         );
       }
 
-      const result = await usersCollection.updateOne(
-        { _id: new ObjectId(requestData.userId) },
-        { $set: updateFields }
-      );
+      const newPackage = {
+        name: requestData.name,
+        deploymentLimit: requestData.deploymentLimit,
+        price: requestData.price,
+        features: requestData.features || [],
+        isActive: requestData.isActive !== undefined ? requestData.isActive : true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
 
-      if (result.matchedCount === 0) {
-        return new Response(
-          JSON.stringify({ error: "User not found" }),
-          {
-            status: 404,
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-          }
-        );
-      }
-
-      const updatedUser = await usersCollection.findOne(
-        { _id: new ObjectId(requestData.userId) },
-        { projection: { password: 0 } }
-      );
+      const result = await packagesCollection.insertOne(newPackage);
 
       const data = {
         success: true,
-        message: "User updated successfully",
-        user: {
-          id: updatedUser?._id?.toString(),
-          email: updatedUser?.email,
-          name: updatedUser?.name,
-          deploymentLimit: updatedUser?.deploymentLimit || 1,
-          activeDeployments: updatedUser?.activeDeployments || 0,
-          isVerified: updatedUser?.isVerified,
+        message: "Package created successfully",
+        package: {
+          id: result.insertedId.toString(),
+          ...newPackage,
         },
       };
 
       return new Response(JSON.stringify(data), {
+        status: 201,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     } finally {
       await client.close();
     }
   } catch (error) {
-    console.error("Error updating user:", error);
+    console.error("Error creating package:", error);
     return new Response(
-      JSON.stringify({ error: "Failed to update user" }),
+      JSON.stringify({ error: "Failed to create package" }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },

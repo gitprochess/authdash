@@ -11,15 +11,18 @@ import {
   XCircle,
   Loader2,
   RefreshCw,
+  Layers,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { adminService, AdminUser } from '../../services/admin';
 import { UserEditModal } from './UserEditModal';
+import { PackageManager } from './PackageManager';
 
 const ADMIN_EMAILS = ['n4nikhilkana@gmail.com', 'admin@cyaphire.com'];
 
 export const SuperAdminDashboard: React.FC = () => {
   const { token, user } = useAuth();
+  const [activeTab, setActiveTab] = useState<'users' | 'packages'>('users');
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -124,47 +127,74 @@ export const SuperAdminDashboard: React.FC = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="glass-curved p-6">
-          <div className="flex items-center justify-between mb-2">
-            <Users className="w-8 h-8 text-blue-400" />
-            <span className="text-2xl font-bold text-white">{totalUsers}</span>
-          </div>
-          <p className="text-gray-400 text-sm">Total Users</p>
-        </div>
-
-        <div className="glass-curved p-6">
-          <div className="flex items-center justify-between mb-2">
-            <Package className="w-8 h-8 text-green-400" />
-            <span className="text-2xl font-bold text-white">
-              {stats.totalDeployments}
-            </span>
-          </div>
-          <p className="text-gray-400 text-sm">Active Deployments</p>
-        </div>
-
-        <div className="glass-curved p-6">
-          <div className="flex items-center justify-between mb-2">
-            <CheckCircle className="w-8 h-8 text-emerald-400" />
-            <span className="text-2xl font-bold text-white">
-              {stats.verifiedUsers}
-            </span>
-          </div>
-          <p className="text-gray-400 text-sm">Verified Users</p>
-        </div>
-
-        <div className="glass-curved p-6">
-          <div className="flex items-center justify-between mb-2">
-            <TrendingUp className="w-8 h-8 text-amber-400" />
-            <span className="text-2xl font-bold text-white">
-              {stats.avgDeploymentLimit}
-            </span>
-          </div>
-          <p className="text-gray-400 text-sm">Avg Deployment Limit</p>
-        </div>
+      <div className="flex gap-4 border-b border-bolt-dark-700">
+        <button
+          onClick={() => setActiveTab('users')}
+          className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors ${
+            activeTab === 'users'
+              ? 'border-purple-500 text-purple-400'
+              : 'border-transparent text-bolt-dark-300 hover:text-bolt-dark-100'
+          }`}
+        >
+          <Users className="w-5 h-5" />
+          User Management
+        </button>
+        <button
+          onClick={() => setActiveTab('packages')}
+          className={`flex items-center gap-2 px-4 py-3 border-b-2 transition-colors ${
+            activeTab === 'packages'
+              ? 'border-purple-500 text-purple-400'
+              : 'border-transparent text-bolt-dark-300 hover:text-bolt-dark-100'
+          }`}
+        >
+          <Layers className="w-5 h-5" />
+          Package Management
+        </button>
       </div>
 
-      <div className="glass-curved p-6">
+      {activeTab === 'users' ? (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="glass-curved p-6">
+              <div className="flex items-center justify-between mb-2">
+                <Users className="w-8 h-8 text-blue-400" />
+                <span className="text-2xl font-bold text-white">{totalUsers}</span>
+              </div>
+              <p className="text-gray-400 text-sm">Total Users</p>
+            </div>
+
+            <div className="glass-curved p-6">
+              <div className="flex items-center justify-between mb-2">
+                <Package className="w-8 h-8 text-green-400" />
+                <span className="text-2xl font-bold text-white">
+                  {stats.totalDeployments}
+                </span>
+              </div>
+              <p className="text-gray-400 text-sm">Active Deployments</p>
+            </div>
+
+            <div className="glass-curved p-6">
+              <div className="flex items-center justify-between mb-2">
+                <CheckCircle className="w-8 h-8 text-emerald-400" />
+                <span className="text-2xl font-bold text-white">
+                  {stats.verifiedUsers}
+                </span>
+              </div>
+              <p className="text-gray-400 text-sm">Verified Users</p>
+            </div>
+
+            <div className="glass-curved p-6">
+              <div className="flex items-center justify-between mb-2">
+                <TrendingUp className="w-8 h-8 text-amber-400" />
+                <span className="text-2xl font-bold text-white">
+                  {stats.avgDeploymentLimit}
+                </span>
+              </div>
+              <p className="text-gray-400 text-sm">Avg Deployment Limit</p>
+            </div>
+          </div>
+
+          <div className="glass-curved p-6">
         <div className="mb-6">
           <div className="relative">
             <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
@@ -338,6 +368,10 @@ export const SuperAdminDashboard: React.FC = () => {
           </>
         )}
       </div>
+        </>
+      ) : (
+        <PackageManager />
+      )}
 
       {showEditModal && selectedUser && (
         <UserEditModal

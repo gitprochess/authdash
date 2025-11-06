@@ -10,13 +10,6 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
 };
 
-interface UpdateUserRequest {
-  userId: string;
-  deploymentLimit?: number;
-  activeDeployments?: number;
-  isVerified?: boolean;
-}
-
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
     return new Response(null, {
@@ -38,7 +31,6 @@ Deno.serve(async (req: Request) => {
     }
 
     const token = authHeader.replace("Bearer ", "");
-
     const payload = atob(token.split('.')[1]);
     const tokenData = JSON.parse(payload);
     const userEmail = tokenData.email;
@@ -53,11 +45,11 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    const requestData: UpdateUserRequest = await req.json();
+    const { packageId } = await req.json();
 
-    if (!requestData.userId) {
+    if (!packageId) {
       return new Response(
-        JSON.stringify({ error: "User ID is required" }),
+        JSON.stringify({ error: "Package ID is required" }),
         {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -70,40 +62,15 @@ Deno.serve(async (req: Request) => {
     try {
       await client.connect();
       const db = client.db("admin");
-      const usersCollection = db.collection("users");
+      const packagesCollection = db.collection("packages");
 
-      const updateFields: Record<string, unknown> = {};
+      const result = await packagesCollection.deleteOne({
+        _id: new ObjectId(packageId),
+      });
 
-      if (requestData.deploymentLimit !== undefined) {
-        updateFields.deploymentLimit = requestData.deploymentLimit;
-      }
-
-      if (requestData.activeDeployments !== undefined) {
-        updateFields.activeDeployments = requestData.activeDeployments;
-      }
-
-      if (requestData.isVerified !== undefined) {
-        updateFields.isVerified = requestData.isVerified;
-      }
-
-      if (Object.keys(updateFields).length === 0) {
+      if (result.deletedCount === 0) {
         return new Response(
-          JSON.stringify({ error: "No fields to update" }),
-          {
-            status: 400,
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-          }
-        );
-      }
-
-      const result = await usersCollection.updateOne(
-        { _id: new ObjectId(requestData.userId) },
-        { $set: updateFields }
-      );
-
-      if (result.matchedCount === 0) {
-        return new Response(
-          JSON.stringify({ error: "User not found" }),
+          JSON.stringify({ error: "Package not found" }),
           {
             status: 404,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -111,22 +78,9 @@ Deno.serve(async (req: Request) => {
         );
       }
 
-      const updatedUser = await usersCollection.findOne(
-        { _id: new ObjectId(requestData.userId) },
-        { projection: { password: 0 } }
-      );
-
       const data = {
         success: true,
-        message: "User updated successfully",
-        user: {
-          id: updatedUser?._id?.toString(),
-          email: updatedUser?.email,
-          name: updatedUser?.name,
-          deploymentLimit: updatedUser?.deploymentLimit || 1,
-          activeDeployments: updatedUser?.activeDeployments || 0,
-          isVerified: updatedUser?.isVerified,
-        },
+        message: "Package deleted successfully",
       };
 
       return new Response(JSON.stringify(data), {
@@ -136,9 +90,9 @@ Deno.serve(async (req: Request) => {
       await client.close();
     }
   } catch (error) {
-    console.error("Error updating user:", error);
+    console.error("Error deleting package:", error);
     return new Response(
-      JSON.stringify({ error: "Failed to update user" }),
+      JSON.stringify({ error: "Failed to delete package" }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },

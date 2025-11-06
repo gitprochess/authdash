@@ -10,11 +10,13 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
 };
 
-interface UpdateUserRequest {
-  userId: string;
+interface UpdatePackageRequest {
+  packageId: string;
+  name?: string;
   deploymentLimit?: number;
-  activeDeployments?: number;
-  isVerified?: boolean;
+  price?: number;
+  features?: string[];
+  isActive?: boolean;
 }
 
 Deno.serve(async (req: Request) => {
@@ -38,7 +40,6 @@ Deno.serve(async (req: Request) => {
     }
 
     const token = authHeader.replace("Bearer ", "");
-
     const payload = atob(token.split('.')[1]);
     const tokenData = JSON.parse(payload);
     const userEmail = tokenData.email;
@@ -53,11 +54,11 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    const requestData: UpdateUserRequest = await req.json();
+    const requestData: UpdatePackageRequest = await req.json();
 
-    if (!requestData.userId) {
+    if (!requestData.packageId) {
       return new Response(
-        JSON.stringify({ error: "User ID is required" }),
+        JSON.stringify({ error: "Package ID is required" }),
         {
           status: 400,
           headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -70,40 +71,40 @@ Deno.serve(async (req: Request) => {
     try {
       await client.connect();
       const db = client.db("admin");
-      const usersCollection = db.collection("users");
+      const packagesCollection = db.collection("packages");
 
-      const updateFields: Record<string, unknown> = {};
+      const updateFields: Record<string, unknown> = {
+        updatedAt: new Date(),
+      };
+
+      if (requestData.name !== undefined) {
+        updateFields.name = requestData.name;
+      }
 
       if (requestData.deploymentLimit !== undefined) {
         updateFields.deploymentLimit = requestData.deploymentLimit;
       }
 
-      if (requestData.activeDeployments !== undefined) {
-        updateFields.activeDeployments = requestData.activeDeployments;
+      if (requestData.price !== undefined) {
+        updateFields.price = requestData.price;
       }
 
-      if (requestData.isVerified !== undefined) {
-        updateFields.isVerified = requestData.isVerified;
+      if (requestData.features !== undefined) {
+        updateFields.features = requestData.features;
       }
 
-      if (Object.keys(updateFields).length === 0) {
-        return new Response(
-          JSON.stringify({ error: "No fields to update" }),
-          {
-            status: 400,
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
-          }
-        );
+      if (requestData.isActive !== undefined) {
+        updateFields.isActive = requestData.isActive;
       }
 
-      const result = await usersCollection.updateOne(
-        { _id: new ObjectId(requestData.userId) },
+      const result = await packagesCollection.updateOne(
+        { _id: new ObjectId(requestData.packageId) },
         { $set: updateFields }
       );
 
       if (result.matchedCount === 0) {
         return new Response(
-          JSON.stringify({ error: "User not found" }),
+          JSON.stringify({ error: "Package not found" }),
           {
             status: 404,
             headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -111,21 +112,22 @@ Deno.serve(async (req: Request) => {
         );
       }
 
-      const updatedUser = await usersCollection.findOne(
-        { _id: new ObjectId(requestData.userId) },
-        { projection: { password: 0 } }
-      );
+      const updatedPackage = await packagesCollection.findOne({
+        _id: new ObjectId(requestData.packageId),
+      });
 
       const data = {
         success: true,
-        message: "User updated successfully",
-        user: {
-          id: updatedUser?._id?.toString(),
-          email: updatedUser?.email,
-          name: updatedUser?.name,
-          deploymentLimit: updatedUser?.deploymentLimit || 1,
-          activeDeployments: updatedUser?.activeDeployments || 0,
-          isVerified: updatedUser?.isVerified,
+        message: "Package updated successfully",
+        package: {
+          id: updatedPackage?._id?.toString(),
+          name: updatedPackage?.name,
+          deploymentLimit: updatedPackage?.deploymentLimit,
+          price: updatedPackage?.price,
+          features: updatedPackage?.features || [],
+          isActive: updatedPackage?.isActive,
+          createdAt: updatedPackage?.createdAt,
+          updatedAt: updatedPackage?.updatedAt,
         },
       };
 
@@ -136,9 +138,9 @@ Deno.serve(async (req: Request) => {
       await client.close();
     }
   } catch (error) {
-    console.error("Error updating user:", error);
+    console.error("Error updating package:", error);
     return new Response(
-      JSON.stringify({ error: "Failed to update user" }),
+      JSON.stringify({ error: "Failed to update package" }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
