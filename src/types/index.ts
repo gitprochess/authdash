@@ -4,6 +4,8 @@ export interface User {
   email: string;
   profession: string;
   contactNumber: string;
+  deploymentLimit?: number;
+  activeDeployments?: number;
 }
 
 export interface AuthState {

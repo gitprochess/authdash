@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Container, RefreshCw, ExternalLink, Play, Square, AlertCircle, Skull, Loader2, Globe, RotateCw } from 'lucide-react';
 import { Container as ContainerType } from '../../types';
 import { containerApi } from '../../services/api';
+import { mongodbService } from '../../services/mongodb';
 import { useAuth } from '../../contexts/AuthContext';
+import { DeploymentLimitBanner } from '../Dashboard/DeploymentLimitBanner';
 
 export const ContainerManager: React.FC = () => {
   const { token, currentSSHHost } = useAuth();
@@ -144,6 +146,13 @@ export const ContainerManager: React.FC = () => {
 
       const response = await containerApi.stopContainer(containerId, token);
 
+      // Decrement deployment count in MongoDB
+      try {
+        await mongodbService.decrementDeploymentCount(token, projectName);
+      } catch (error) {
+        console.error('Failed to update deployment count:', error);
+      }
+
       // Refresh containers list to get updated status
       await fetchContainers();
 
@@ -210,6 +219,8 @@ export const ContainerManager: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <DeploymentLimitBanner />
+
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-white">

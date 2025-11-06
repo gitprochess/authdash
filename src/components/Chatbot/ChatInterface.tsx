@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Bot, User, Loader2, Terminal, MessageSquare } from 'lucide-react';
 import { ChatMessage } from '../../types';
 import { chatApi } from '../../services/api';
+import { mongodbService } from '../../services/mongodb';
 import { useAuth } from '../../contexts/AuthContext';
 import { LogsPanel } from './LogsPanel';
 
@@ -61,14 +62,45 @@ export const ChatInterface: React.FC = () => {
 
     // Clear input immediately
     setInputMessage('');
-    
+
     // Add user message immediately for better UX
     setMessages(prev => {
       const newMessages = [...prev, userMessage];
       return newMessages.length > 100 ? newMessages.slice(-100) : newMessages;
     });
-    
+
     setLoading(true);
+
+    // Check for deployment-related keywords
+    const deploymentKeywords = ['deploy', 'create', 'launch', 'start', 'build', 'setup'];
+    const isDeploymentRequest = deploymentKeywords.some(keyword =>
+      messageToSend.toLowerCase().includes(keyword)
+    );
+
+    // If it's a deployment request, check limits first
+    if (isDeploymentRequest && token) {
+      try {
+        const limitCheck = await mongodbService.checkDeploymentLimit(token);
+
+        if (!limitCheck.allowed) {
+          const limitWarning: ChatMessage = {
+            id: (Date.now() + 1).toString(),
+            message: `🚫 **Deployment Limit Reached**\n\nYou have reached your deployment limit (${limitCheck.current}/${limitCheck.limit} deployments active).\n\nPlease upgrade your plan or remove inactive deployments to deploy more applications.`,
+            sender: 'bot',
+            timestamp: new Date(),
+          };
+
+          setMessages(prev => {
+            const newMessages = [...prev, limitWarning];
+            return newMessages.length > 100 ? newMessages.slice(-100) : newMessages;
+          });
+          setLoading(false);
+          return;
+        }
+      } catch (error) {
+        console.error('Failed to check deployment limit:', error);
+      }
+    }
 
     try {
       
