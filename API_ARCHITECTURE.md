@@ -210,7 +210,7 @@ These emails have access to:
 ## Database
 
 **MongoDB** is used for storing application data:
-- Connection: `mongodb://adminUser:StrongPassw0rd!@localhost:27017/admin`
+- Connection: `mongodb://adminUser:StrongPassw0rd!@34.93.8.67:27017/admin`
 - Database: `admin`
 - Collections:
   - `users` - User accounts and deployment information

@@ -1,7 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { MongoClient, ObjectId } from "npm:mongodb@6.3.0";
 
-const MONGODB_URI = "mongodb://adminUser:StrongPassw0rd!@localhost:27017/admin";
+const MONGODB_URI = "mongodb://adminUser:StrongPassw0rd!@34.93.8.67:27017/admin";
 const ADMIN_EMAILS = ["n4nikhilkana@gmail.com", "admin@cyaphire.com"];
 
 const corsHeaders = {
