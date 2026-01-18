@@ -6,20 +6,40 @@ import { useAuth } from '../../contexts/AuthContext';
 import { AddSSHForm } from './AddSSHForm';
 
 export const SSHManager: React.FC = () => {
-  const { token, user, currentSSHHost, setCurrentSSHHost, sshConfigs, setSshConfigs } = useAuth();
+  const { token, user, currentSSHHost, setCurrentSSHHost, sshConfigs, setSshConfigs, sshFetching } = useAuth();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [visiblePasswords, setVisiblePasswords] = useState<Set<number>>(new Set());
 
   useEffect(() => {
-    if (token) {
+    console.log('🔍 SSHManager mounted - token:', !!token, 'sshConfigs:', sshConfigs.length, 'sshFetching:', sshFetching);
+    console.log('🔍 SSH configs details:', sshConfigs);
+
+    // If we have configs already (from login), use them immediately
+    if (sshConfigs.length > 0) {
+      setLoading(false);
+      setError('');
+      console.log('✅ Using SSH configs loaded during login:', sshConfigs.length, 'servers');
+      console.log('✅ SSH configs content:', sshConfigs);
+      return;
+    }
+
+    // If currently fetching during login, keep loading
+    if (sshFetching) {
+      console.log('⏳ SSH configs are being fetched during login, waiting...');
+      return;
+    }
+
+    // Only fetch if we don't have configs and not fetching
+    if (token && sshConfigs.length === 0 && !sshFetching) {
+      console.log('📡 No SSH configs found, fetching from API...');
       fetchSSHConfigs();
-    } else {
+    } else if (!token) {
       setLoading(false);
       setError('No authentication token available');
     }
-  }, [token]);
+  }, [token, sshConfigs.length, sshFetching]);
 
   const fetchSSHConfigs = async () => {
     if (!token) {
@@ -103,8 +123,8 @@ export const SSHManager: React.FC = () => {
           </p>
           {currentSSHHost && (
             <div className="flex items-center space-x-2 mt-2">
-              <Globe className="w-4 h-4 text-aqua-green" />
-              <span className="text-sm text-aqua-green">
+              <Globe className="w-4 h-4 text-green-400" />
+              <span className="text-sm text-green-400">
                 Current Host: <span className="font-mono">{currentSSHHost}</span>
               </span>
             </div>
@@ -119,13 +139,15 @@ export const SSHManager: React.FC = () => {
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             <span>Refresh</span>
           </button>
-          <button
-            onClick={() => setShowAddForm(true)}
-            className="flex items-center space-x-2 px-4 py-2 futuristic-btn text-white rounded-lg transition-all duration-200 bolt-shine"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Add SSH</span>
-          </button>
+          {sshConfigs.length === 0 && (
+            <button
+              onClick={() => setShowAddForm(true)}
+              className="flex items-center space-x-2 px-4 py-2 futuristic-btn text-white rounded-lg transition-all duration-200 bolt-shine"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Add SSH</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -159,7 +181,7 @@ export const SSHManager: React.FC = () => {
       )}
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {sshConfigs.map((config, index) => {
+        {sshConfigs.map((config: SSHConfig, index: number) => {
           const isCurrentHost = currentSSHHost === config.host;
           
           return (
@@ -177,8 +199,8 @@ export const SSHManager: React.FC = () => {
                 <div className="flex items-center space-x-2">
                   {isCurrentHost && (
                     <div className="flex items-center space-x-1">
-                      <CheckCircle className="w-4 h-4 text-aqua-green" />
-                      <span className="text-xs text-aqua-green font-medium">Active</span>
+                      <CheckCircle className="w-4 h-4 text-green-400" />
+                      <span className="text-xs text-green-400 font-medium">Active</span>
                     </div>
                   )}
                   <div className="w-2 h-2 bg-aqua-green rounded-full animate-pulse active-glow" title="Available"></div>

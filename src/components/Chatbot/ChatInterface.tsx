@@ -1,33 +1,51 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User, Loader2, Terminal, MessageSquare } from 'lucide-react';
+import { Send, Bot, User, Loader2 } from 'lucide-react';
 import { ChatMessage } from '../../types';
 import { chatApi } from '../../services/api';
 import { useAuth } from '../../contexts/AuthContext';
-import { LogsPanel } from './LogsPanel';
-
-type ChatView = 'chat' | 'logs';
 
 export const ChatInterface: React.FC = () => {
   const { token } = useAuth();
-  const [activeView, setActiveView] = useState<ChatView>('chat');
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: '1',
-      message: 'Hello! I\'m Cyaphire AI X, your next-generation intelligent assistant. How can I help you with your deployments today?',
-      sender: 'bot',
-      timestamp: new Date(),
-    },
-    {
-      id: '2',
-      message: 'I can assist you with deployments, server management, troubleshooting, container orchestration, and development questions. What would you like to explore?',
-      sender: 'bot',
-      timestamp: new Date(),
-    },
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [inputMessage, setInputMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Loading animation followed by instant message appearance
+  useEffect(() => {
+    const loadMessages = () => {
+      const initialMessages: ChatMessage[] = [
+        {
+          id: '1',
+          message: 'Hello! I\'m Cyaphire AI, your next-generation intelligent assistant.',
+          sender: 'bot',
+          timestamp: new Date(),
+        },
+        {
+          id: '2',
+          message: 'I can assist you with deployments, server management, troubleshooting, container orchestration, and development questions.',
+          sender: 'bot',
+          timestamp: new Date(),
+        },
+        {
+          id: '3',
+          message: 'What would you like to explore?',
+          sender: 'bot',
+          timestamp: new Date(),
+        },
+      ];
+
+      setMessages(initialMessages);
+      setIsLoading(false);
+    };
+
+    // Show loading for 2 seconds, then show messages
+    const loadingTimeout = setTimeout(loadMessages, 2000);
+
+    return () => clearTimeout(loadingTimeout);
+  }, []);
 
   // Optimize scrolling - use callback to prevent recreation
   const scrollToBottom = React.useCallback(() => {
@@ -183,7 +201,7 @@ export const ChatInterface: React.FC = () => {
     ));
   }, [messages]);
   return (
-    <div className="h-full flex flex-col lg:flex-row gap-4 lg:gap-6 overflow-hidden">
+    <div className="h-full flex flex-col overflow-hidden">
       {/* Chat Panel - Visual Centerpiece */}
       <div className="flex-1 flex flex-col glass-curved overflow-hidden" style={{ background: 'var(--qp-bg-chat)' }}>
         {/* Chat Header - Matte */}
@@ -195,7 +213,7 @@ export const ChatInterface: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-lg font-semibold flex items-center space-x-2" style={{ color: 'var(--qp-text-primary)' }}>
-                  <span>Cyaphire AI X</span>
+                  <span>Cyaphire AI</span>
                   <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--qp-secondary)' }}></div>
                 </h3>
                 <p className="text-xs" style={{ color: 'var(--qp-text-secondary)' }}>Powered by DeploidX • Quantum AI Engine</p>
@@ -211,7 +229,29 @@ export const ChatInterface: React.FC = () => {
         {/* Messages Area - Gradient Background */}
         <div className="flex-1 overflow-y-auto px-4 sm:px-6 md:px-8 py-4 md:py-6 space-y-4 md:space-y-6 min-h-0" style={{ background: 'transparent' }}>
             {messageComponents}
-            
+
+          {isLoading && (
+            <div className="flex justify-start">
+              <div className="flex items-start space-x-4">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ai-message-glow" style={{ background: 'var(--gradient-ai)', border: '1px solid var(--qp-border)' }}>
+                  <Bot className="w-6 h-6" style={{ color: 'var(--qp-primary)' }} />
+                </div>
+                <div className="px-6 py-4 rounded-2xl rounded-tl-sm shadow-lg max-w-[85%] ai-message-glow" style={{ background: 'var(--gradient-ai)', border: '1px solid var(--qp-border)' }}>
+                  <div className="flex items-center space-x-3">
+                    <Loader2 className="w-5 h-5 animate-spin" style={{ color: 'var(--qp-primary)' }} />
+                    <span className="text-sm" style={{ color: 'var(--qp-text-primary)' }}>AI is preparing...</span>
+                  </div>
+                  {/* Loading Pulse Indicator */}
+                  <div className="flex items-center space-x-1 mt-3">
+                    <div className="w-1.5 h-1.5 rounded-full typing-pulse" style={{ background: 'var(--qp-secondary)' }}></div>
+                    <div className="w-1.5 h-1.5 rounded-full typing-pulse" style={{ background: 'var(--qp-secondary)', animationDelay: '0.2s' }}></div>
+                    <div className="w-1.5 h-1.5 rounded-full typing-pulse" style={{ background: 'var(--qp-secondary)', animationDelay: '0.4s' }}></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {loading && (
             <div className="flex justify-start">
               <div className="flex items-start space-x-4">
@@ -272,11 +312,6 @@ export const ChatInterface: React.FC = () => {
             </button>
           </div>
         </form>
-      </div>
-
-      {/* Logs Panel - Blended Design */}
-      <div className="w-full lg:w-80 flex-shrink-0 h-64 lg:h-auto">
-        <LogsPanel />
       </div>
     </div>
   );

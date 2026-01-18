@@ -3,9 +3,10 @@ import { AuthState, User, SSHConfig } from '../types';
 import { sshApi } from '../services/api';
 
 interface AuthContextType extends AuthState {
-  login: (token: string, user: User) => void;
+  login: (token: string, user: User) => Promise<void>;
   logout: () => void;
   setLoading: (loading: boolean) => void;
+  isLoggingIn: boolean;
   currentSSHHost: string | null;
   setCurrentSSHHost: (host: string | null) => void;
   sshConfigs: SSHConfig[];
@@ -19,11 +20,12 @@ type AuthAction =
   | { type: 'LOGIN'; payload: { token: string; user: User } }
   | { type: 'LOGOUT' }
   | { type: 'SET_LOADING'; payload: boolean }
+  | { type: 'SET_LOGGING_IN'; payload: boolean }
   | { type: 'SET_SSH_HOST'; payload: string | null }
   | { type: 'SET_SSH_CONFIGS'; payload: SSHConfig[] }
   | { type: 'SET_SSH_FETCHING'; payload: boolean };
 
-const authReducer = (state: AuthState & { currentSSHHost: string | null; sshConfigs: SSHConfig[]; sshFetching: boolean }, action: AuthAction): AuthState & { currentSSHHost: string | null; sshConfigs: SSHConfig[]; sshFetching: boolean } => {
+const authReducer = (state: AuthState & { isLoggingIn: boolean; currentSSHHost: string | null; sshConfigs: SSHConfig[]; sshFetching: boolean }, action: AuthAction): AuthState & { isLoggingIn: boolean; currentSSHHost: string | null; sshConfigs: SSHConfig[]; sshFetching: boolean } => {
   switch (action.type) {
     case 'LOGIN':
       return {
@@ -32,6 +34,7 @@ const authReducer = (state: AuthState & { currentSSHHost: string | null; sshConf
         token: action.payload.token,
         isAuthenticated: true,
         isLoading: false,
+        isLoggingIn: false,
       };
     case 'LOGOUT':
       return {
@@ -39,6 +42,7 @@ const authReducer = (state: AuthState & { currentSSHHost: string | null; sshConf
         token: null,
         isAuthenticated: false,
         isLoading: false,
+        isLoggingIn: false,
         currentSSHHost: null,
         sshConfigs: [],
         sshFetching: false,
@@ -47,6 +51,11 @@ const authReducer = (state: AuthState & { currentSSHHost: string | null; sshConf
       return {
         ...state,
         isLoading: action.payload,
+      };
+    case 'SET_LOGGING_IN':
+      return {
+        ...state,
+        isLoggingIn: action.payload,
       };
     case 'SET_SSH_HOST':
       return {
@@ -70,11 +79,12 @@ const authReducer = (state: AuthState & { currentSSHHost: string | null; sshConf
   }
 };
 
-const initialState: AuthState & { currentSSHHost: string | null; sshConfigs: SSHConfig[]; sshFetching: boolean } = {
+const initialState: AuthState & { isLoggingIn: boolean; currentSSHHost: string | null; sshConfigs: SSHConfig[]; sshFetching: boolean } = {
   user: null,
   token: null,
   isAuthenticated: false,
   isLoading: false,
+  isLoggingIn: false,
   currentSSHHost: null,
   sshConfigs: [],
   sshFetching: false,
@@ -113,13 +123,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  const login = (token: string, user: User) => {
+  const login = async (token: string, user: User) => {
+    console.log('🔐 Starting login process...');
     localStorage.setItem('deploidx_token', token);
     localStorage.setItem('deploidx_user', JSON.stringify(user));
     dispatch({ type: 'LOGIN', payload: { token, user } });
-    
-    // Automatically fetch SSH configurations after login
-    fetchAndSetSSHHost();
+    console.log('✅ User authenticated and state updated');
+
+    // Immediately fetch SSH configurations after login
+    try {
+      console.log('📡 Starting SSH config fetch after login...');
+      dispatch({ type: 'SET_SSH_FETCHING', payload: true });
+
+      const configs = await sshApi.list(token);
+      console.log('📡 Raw SSH API response:', configs);
+      console.log('📡 SSH API response type:', typeof configs);
+      console.log('📡 SSH API response length:', Array.isArray(configs) ? configs.length : 'not array');
+
+      const processedConfigs = Array.isArray(configs) ? configs : (configs ? [configs] : []);
+      console.log('📡 Processed configs:', processedConfigs);
+
+      setSshConfigs(processedConfigs);
+      console.log('✅ SSH configurations loaded after login:', processedConfigs.length, 'servers');
+      console.log('✅ Final SSH configs in context:', processedConfigs);
+    } catch (error: any) {
+      console.error('❌ Failed to load SSH configurations after login:', error.message);
+      console.error('❌ Error details:', error);
+    } finally {
+      dispatch({ type: 'SET_SSH_FETCHING', payload: false });
+      console.log('🏁 SSH fetching completed');
+    }
   };
 
   const logout = () => {

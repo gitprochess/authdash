@@ -25,10 +25,10 @@ export const LoginForm: React.FC = () => {
 
     try {
       const response = await authApi.login(formData);
-      
+
       // Handle different response formats from your API
       let token, user;
-      
+
       // Check for various token field names
       if (response.token) {
         token = response.token;
@@ -82,15 +82,14 @@ export const LoginForm: React.FC = () => {
         user.email = formData.email;
       }
 
+      // Store authentication data and fetch SSH configs
+      await login(token, user);
 
-      // Store authentication data
-      login(token, user);
-      
     } catch (error: any) {
-      
+
       // Provide more specific error messages
       let errorMessage = 'Login failed. Please check your credentials.';
-      
+
       if (error.status === 401) {
         errorMessage = 'Invalid email or password. Please try again.';
       } else if (error.status === 403) {
@@ -102,7 +101,7 @@ export const LoginForm: React.FC = () => {
       } else if (error.message) {
         errorMessage = error.message;
       }
-      
+
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -117,7 +116,7 @@ export const LoginForm: React.FC = () => {
             Welcome Back
           </h2>
           <p className="text-bolt-dark-300 text-sm">
-            Sign in to continue to Cyaphire AI X
+            Sign in to continue to Cyaphire AI
           </p>
         </div>
 

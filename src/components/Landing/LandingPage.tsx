@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { ArrowRight, MessageSquare, Zap, Globe, Server, Database, Shield, CheckCircle, Clock, Code, Rocket, Terminal, Sparkles, Play, Bot, Gauge, Lock, Container } from 'lucide-react';
 import { CyaphireLogo } from '../UI/CyaphireLogo';
-import { FlyingIcons } from '../UI/FlyingIcons';
 import { LoginForm } from '../Auth/LoginForm';
+import { FlyingIcons } from '../UI/FlyingIcons';
 
-type AuthStep = 'landing' | 'login';
+type AuthStep = 'landing' | 'login' | 'signup';
 
 interface LandingPageProps {
   onAuthSuccess: () => void;

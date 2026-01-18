@@ -18,7 +18,7 @@ export const Dashboard: React.FC = () => {
   const { theme, settings } = useTheme();
 
   const tabs = [
-    { id: 'chat' as TabType, label: 'Cyaphire AI X', icon: MessageSquare },
+    { id: 'chat' as TabType, label: 'Cyaphire AI', icon: MessageSquare },
     { id: 'containers' as TabType, label: 'Containers', icon: Container },
     { id: 'databases' as TabType, label: 'Databases', icon: Database },
     { id: 'ssh' as TabType, label: 'SSH Servers', icon: Server },

@@ -17,13 +17,13 @@ export const Header: React.FC = () => {
           {/* SSH Status - Quantum Theme */}
           <div className={`flex items-center space-x-2 text-xs px-3 py-1.5 rounded-lg border transition-all duration-200`}
             style={{
-              background: currentSSHHost ? 'rgba(0, 255, 255, 0.05)' : 'rgba(245, 158, 11, 0.05)',
-              borderColor: currentSSHHost ? 'var(--qp-secondary)' : '#f59e0b',
-              color: currentSSHHost ? 'var(--qp-secondary)' : '#fbbf24'
+              background: currentSSHHost ? 'rgba(34, 197, 94, 0.1)' : 'rgba(245, 158, 11, 0.05)',
+              borderColor: currentSSHHost ? '#22c55e' : '#f59e0b',
+              color: currentSSHHost ? '#22c55e' : '#fbbf24'
             }}>
             {currentSSHHost ? (
               <>
-                <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--qp-secondary)' }}></div>
+                <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#22c55e' }}></div>
                 <Server className="w-3.5 h-3.5" />
                 <span className="hidden md:block font-mono text-xs">{currentSSHHost}</span>
               </>
